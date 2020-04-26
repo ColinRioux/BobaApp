@@ -19,6 +19,6 @@ export default {
 #app {
     text-align: center;
     color: blue;
-    margin-top: 5em;
+    margin-top: 5em; 
 }
 </style>
