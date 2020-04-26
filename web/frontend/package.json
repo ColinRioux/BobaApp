@@ -5,5 +5,8 @@
   "main": "index.js",
   "author": "Colin Rioux <crioux@scu.edu> and Horatio Xiao <hxiao@scu.edu>",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "vue": "2.6.11"
+  }
 }
