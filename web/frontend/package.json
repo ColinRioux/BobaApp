@@ -4,8 +4,12 @@
   "description": "Frontend for the ba",
   "main": "index.js",
   "author": "Colin Rioux <crioux@scu.edu> and Horatio Xiao <hxiao@scu.edu>",
-  "license": "MIT",
+  "license": "",
   "private": true,
+  "scripts": {
+    "build": "NODE_ENV=production webpack --mode production",
+    "serve": "webpack-dev-server --mode development"
+  },
   "devDependencies": {
     "@babel/core": "^7.9.0",
     "@babel/preset-env": "^7.9.5",
