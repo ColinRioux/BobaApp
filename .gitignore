@@ -16,9 +16,9 @@ yarn-error.log*
 
 ## yarn
 .pnp.*
-.yarn/*
-!.yarn/releases
-!.yarn/plugins
+.yarn/
+# !.yarn/releases
+# !.yarn/plugins
 
 # Rethinkdb
 db/rethinkdb_data/

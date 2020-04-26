@@ -3,6 +3,7 @@ const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const PnpWebpackPlugin = require('pnp-webpack-plugin')
 
 module.exports = {
     context: path.resolve(__dirname),
@@ -18,7 +19,12 @@ module.exports = {
             vue$: 'vue/dist/vue.esm.js',
             '@': path.resolve(__dirname, 'src'),
             '~': path.resolve(__dirname)
-        }
+        },
+        extensions: ['*', '.js', '.vue', '.json'],
+        plugins: [ PnpWebpackPlugin ]
+    },
+    resolveLoader: {
+        plugins: [ PnpWebpackPlugin.moduleLoader(module) ]
     },
     devServer: {
         open: true,
@@ -27,19 +33,23 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.js$/,
+                loader: require.resolve('babel-loader')
+            },
+            {
                 test: /\.m?jsx?$/,
-                use: 'babel-loader'
+                loader: require.resolve('babel-loader')
             },
             {
                 test: /\.vue$/,
-                use: 'vue-loader'
+                loader: require.resolve('vue-loader')
             },
             {
                 test: /\.css$/,
-                use: [
-                    'vue-style-loader',
-                    'css-loader',
-                    'postcss-loader'
+                loader: [
+                    require.resolve('vue-style-loader'),
+                    require.resolve('css-loader'),
+                    require.resolve('postcss-loader')
                 ]
             }
         ]
