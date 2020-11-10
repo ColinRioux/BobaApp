@@ -1,0 +1,9 @@
+{
+  "name": "sbe-api",
+  "version": "1.0.0",
+  "description": "API server for the SBE",
+  "main": "index.js",
+  "author": "Colin Rioux <crioux@scu.edu>, Horatio Xiao <hxiao@scu.edu>, Chris Tian <ctian@scu.edu>",
+  "license": "",
+  "private": true
+}
