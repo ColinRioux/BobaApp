@@ -1663,13 +1663,17 @@ __metadata:
     clean-webpack-plugin: ^3.0.0
     css-loader: ^3.5.3
     cssnano: ^4.1.10
+    file-loader: ^6.0.0
     html-webpack-plugin: ^4.2.0
+    leaflet: ^1.6.0
     pnp-webpack-plugin: ^1.6.4
     postcss-loader: ^3.0.0
+    url-loader: ^4.1.0
     vue: ^2.6.11
     vue-loader: ^15.9.1
     vue-style-loader: ^4.1.2
     vue-template-compiler: ^2.6.11
+    vue2-leaflet: ^2.5.2
     webpack: ^4.43.0
     webpack-cli: ^3.3.11
     webpack-dev-server: ^3.10.3
@@ -3537,6 +3541,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"file-loader@npm:^6.0.0":
+  version: 6.0.0
+  resolution: "file-loader@npm:6.0.0"
+  dependencies:
+    loader-utils: ^2.0.0
+    schema-utils: ^2.6.5
+  peerDependencies:
+    webpack: ^4.0.0 || ^5.0.0
+  checksum: 2/745f5ee763fe46f2124921ff4fb7ed601eb1e8d6ac975cf6af321b3957ce8f78afb885c636e64a9031634e85e26dc9e8ef40ebeb532153c6a80a7d06b56876cb
+  languageName: node
+  linkType: hard
+
 "file-uri-to-path@npm:1.0.0":
   version: 1.0.0
   resolution: "file-uri-to-path@npm:1.0.0"
@@ -4949,6 +4965,13 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"leaflet@npm:^1.6.0":
+  version: 1.6.0
+  resolution: "leaflet@npm:1.6.0"
+  checksum: 2/de9cc64bfaa767fb2a6a437f5621aafc356f4201cded36a25d8c4e3802085638791e737d127e4d9981b678f802b6757e8053936baad68c62bf80f39b0d063d4b
+  languageName: node
+  linkType: hard
+
 "leven@npm:^3.1.0":
   version: 3.1.0
   resolution: "leven@npm:3.1.0"
@@ -4991,6 +5014,17 @@ fsevents@^1.2.7:
     emojis-list: ^3.0.0
     json5: ^1.0.1
   checksum: 2/9fd690e57ad78d32ff2942383b4a7a175eba575280ba5aca3b4d03183fec34aa0db314f49bd3301adf7e60b02471644161bf53149e8f2d18fd6a52627e95a927
+  languageName: node
+  linkType: hard
+
+"loader-utils@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "loader-utils@npm:2.0.0"
+  dependencies:
+    big.js: ^5.2.2
+    emojis-list: ^3.0.0
+    json5: ^2.1.2
+  checksum: 2/a1c2e48781e1501e126a32c39bc1fb1a7e2f02bd99e5aeb8853ddaf3c121fffefcc4579367f97ca6890b58369e571af1c9ec82e4e20db238d560ab359ff25c33
   languageName: node
   linkType: hard
 
@@ -5242,7 +5276,7 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
-"mime-types@npm:^2.1.12, mime-types@npm:~2.1.17, mime-types@npm:~2.1.19, mime-types@npm:~2.1.24":
+"mime-types@npm:^2.1.12, mime-types@npm:^2.1.26, mime-types@npm:~2.1.17, mime-types@npm:~2.1.19, mime-types@npm:~2.1.24":
   version: 2.1.27
   resolution: "mime-types@npm:2.1.27"
   dependencies:
@@ -8183,6 +8217,23 @@ resolve@^1.3.2:
   languageName: node
   linkType: hard
 
+"url-loader@npm:^4.1.0":
+  version: 4.1.0
+  resolution: "url-loader@npm:4.1.0"
+  dependencies:
+    loader-utils: ^2.0.0
+    mime-types: ^2.1.26
+    schema-utils: ^2.6.5
+  peerDependencies:
+    file-loader: "*"
+    webpack: ^4.0.0 || ^5.0.0
+  peerDependenciesMeta:
+    file-loader:
+      optional: true
+  checksum: 2/5870b969687458608c7cb7fc4e7f46a15478f506724828af3ddbe957318485b428f0fd9f08f01c413e8b556b08d7eb9520d5863e871b0bc279762a47d300a0b5
+  languageName: node
+  linkType: hard
+
 "url-parse@npm:^1.4.3":
   version: 1.4.7
   resolution: "url-parse@npm:1.4.7"
@@ -8373,6 +8424,17 @@ resolve@^1.3.2:
   version: 1.9.1
   resolution: "vue-template-es2015-compiler@npm:1.9.1"
   checksum: 2/e25c0d4603cafb76a2d2c2adbd5cc62f419377d23d65118bc19793320c6448ef80ae191a8d6ec88e62fdd7ecb33d54850b232b02110da94a1fcfac3e062e9e83
+  languageName: node
+  linkType: hard
+
+"vue2-leaflet@npm:^2.5.2":
+  version: 2.5.2
+  resolution: "vue2-leaflet@npm:2.5.2"
+  peerDependencies:
+    "@types/leaflet": ^1.5.7
+    leaflet: ^1.3.4
+    vue: ^2.5.17
+  checksum: 2/b42328a39709da485cd49cfd1a7731c5737db472835b890141bbe0ff298e1b9f5c28807031961b103fda29f5f8b30452d1e98c4dcf3bdfb537c80dd8cea29cf2
   languageName: node
   linkType: hard
 
