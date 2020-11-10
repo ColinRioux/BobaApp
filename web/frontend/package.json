@@ -2,7 +2,7 @@
   "name": "ba-frontend",
   "version": "0.1.0",
   "description": "Frontend for the ba",
-  "author": "Colin Rioux <crioux@scu.edu> and Horatio Xiao <hxiao@scu.edu>",
+  "author": "Colin Rioux <crioux@scu.edu>, Horatio Xiao <hxiao@scu.edu>, Chris Tian <ctian@scu.edu>",
   "license": "",
   "private": true,
   "scripts": {
