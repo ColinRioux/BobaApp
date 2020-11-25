@@ -4,9 +4,9 @@
       :zoom="zoom"
       :center="center"
       :options="mapOptions"
-      style="height: 500px"
       @update:center="centerUpdate"
       @update:zoom="zoomUpdate"
+      class="map"
     >
       <l-tile-layer
         :url="url"
@@ -36,21 +36,23 @@
           </div>
         </l-tooltip>
       </l-marker>
+      <l-control-zoom position="bottomright"></l-control-zoom>
     </l-map>
 </template>
 
 <script>
 import { latLng } from "leaflet";
-import { LMap, LTileLayer, LMarker, LPopup, LTooltip } from "vue2-leaflet";
+import { LMap, LTileLayer, LMarker, LPopup, LTooltip, LControlZoom } from "vue2-leaflet";
 
 export default {
-  name: "Example",
+  name: "Map",
   components: {
     LMap,
     LTileLayer,
     LMarker,
     LPopup,
-    LTooltip
+    LTooltip,
+    LControlZoom
   },
   data() {
     return {
@@ -65,7 +67,8 @@ export default {
       currentCenter: latLng(37.3382, -121.8863),
       showParagraph: false,
       mapOptions: {
-        zoomSnap: 0.5
+        zoomSnap: 0.5,
+        zoomControl: false
       },
       showMap: true
     };
@@ -88,5 +91,10 @@ export default {
 </script>
 
 <style scoped>
-
+.map {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 </style>

@@ -6,8 +6,8 @@
   "license": "",
   "private": true,
   "scripts": {
-    "build": "NODE_ENV=production webpack --mode production",
-    "serve": "webpack-dev-server --mode development"
+    "build": "NODE_ENV=production webpack --mode production --history-api-fallback",
+    "serve": "webpack-dev-server --mode development --history-api-fallback"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
@@ -31,7 +31,12 @@
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.32",
+    "@fortawesome/free-solid-svg-icons": "^5.15.1",
+    "@fortawesome/vue-fontawesome": "2",
+    "buefy": "^0.9.4",
     "leaflet": "^1.6.0",
+    "vue-router": "^3.4.9",
     "vue2-leaflet": "^2.5.2"
   }
 }

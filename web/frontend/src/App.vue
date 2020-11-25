@@ -1,16 +1,20 @@
 <template>
     <div id="app">
-        <TestTemplate/>
+        <MenuBar/>
+        <router-view/>
     </div>
 </template>
 
 <script>
-import TestTemplate from './components/TestTemplate'
+import MenuBar from './components/MenuBar'
 
 export default {
     name: 'App',
     components: {
-        TestTemplate
+        MenuBar
+    },
+    created () {
+        document.title = 'The Social Boba Experience'
     }
 }
 </script>
@@ -19,6 +23,13 @@ export default {
 #app {
     text-align: center;
     color: blue;
-    margin-top: 5em; 
+    padding: 0 !important;
+    height: 100%;
+    position: relative;
+}
+html, body {
+    margin: 0 !important;
+    height: 100%;
+    font-family: Arial, Helvetica, sans-serif;
 }
 </style>
