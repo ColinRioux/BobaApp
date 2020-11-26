@@ -37,7 +37,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 9999999;
+    z-index: 1000;
     position: absolute;
     display: flex;
     align-items: center;

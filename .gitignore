@@ -23,6 +23,10 @@ yarn-error.log*
 # Rethinkdb
 db/rethinkdb_data/
 
+# SBE Api
+web/api/secret_key
+web/api/node_modules/
+
 
 
 # Xcode
