@@ -2,6 +2,7 @@
 
 # Web/Frontend
 https://github.com/alefi87/vuejs-without-cli#barebones-vuejs-with-webpack-and-eslint
+https://gist.github.com/mustafa-kahraman/13bc7ef26acb54107f779dbc95172bd0
 
 ## Creating a new branch
 ```
