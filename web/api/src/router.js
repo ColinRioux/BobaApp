@@ -127,17 +127,19 @@ module.exports = async function (api, opts) {
         var lng = req.params['lng'];
 
 		// initiliazing some variables to help with calculations
-		radius=6371e3
-		var bounds = []
+		radius=6371e3;
+		var bounds = [];
 		distance = 20 / 0.6214 * 1000;
-		var bearings = [0,180,90,270]
+		var bearings = [0,180,90,270];
 
 		// convert lat / long to Radians
-		lat1 = lat * Math.PI / 180
-		lon1 = long * Math.PI / 180
+		lat1 = lat * Math.PI / 180;
+		lon1 = long * Math.PI / 180;
 		delta = distance / radius;
 
+		// loop through north, south, east, west
 		for (x of bearings) {
+			// convert bearing to Radians
 			theta = x * Math.PI / 180;
 
 			lat2 = Math.asin(Math.sin(lat1) * Math.cos(delta) + Math.cos(lat1) * Math.sin(delta) * Math.cos(theta) );
@@ -145,7 +147,7 @@ module.exports = async function (api, opts) {
 			y = Math.sin(theta) * Math.sin(delta) * Math.cos(lat1);
 			x = Math.cos(delta) - Math.sin(lat1) * Math.sin(lat2);
 
-			lon2 = lon1 + Math.atan2(y,x)
+			lon2 = lon1 + Math.atan2(y,x);
 			
 			// store only lats of north and south bound
 			if( x == 0 || x == 90 ) {
@@ -153,10 +155,10 @@ module.exports = async function (api, opts) {
 			}
 			// store only lons of west and east bounds
 			else {
-				bounds.push(lon2)
-			}
+				bounds.push(lon2);
+			};
 
-		}
+		};
 
 
 		
