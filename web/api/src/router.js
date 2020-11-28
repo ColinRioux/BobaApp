@@ -103,6 +103,28 @@ module.exports = async function (api, opts) {
      */
     api.get('/search/:query', async function(req, res) {
         var query = req.params['query'];
+        var str = '^';
+        var quer = str.concat(query);
+
+        api.db.db("restaurants")
+            .table("locations")
+            .filter(function(rest){
+                return rest('name').match(quer);
+            })
+            .run().then(function (err, rests) {
+            if (err) {
+                return err;
+            }
+            if(!rests) {
+                return null;
+            }
+        })
+
+        var response = {results: []};
+        for (let x in rests) {
+            response.results.push(x);
+        }
+        return response;
 
         // TODO
         // 1. Make a call to the database fetching all entries in the 
@@ -175,7 +197,7 @@ module.exports = async function (api, opts) {
                 }
         })
         var response = {results: []}
-        for (x in rests) {
+        for (let x in rests) {
             if (bounds[2] >= x[lon] && bounds[3] <= x[lon] ) {
                 response.results.push(x)
             }
