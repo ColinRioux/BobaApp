@@ -30,6 +30,12 @@ db.dbList().run().then(function (result) {
         db.db('users').tableCreate('owner').run();
         db.db('users').tableCreate('admin').run();
     }
+
+    if (!result.includes('restaurants')) {
+        console.log('Created restaurants database');
+        db.dbCreate('restaurants').run();
+        db.db('restaurants').tableCreate('locations').run();
+    }
 });
 
 // Decorate fastify with a db object so we can use it across files

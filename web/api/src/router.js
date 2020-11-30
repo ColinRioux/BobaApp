@@ -159,8 +159,6 @@ module.exports = async function (api, opts) {
 			};
 
 		};
-
-
 		
         // TODO
         // 1. Determine range of lat/lng coordinates that are in a radius of MAX 25 miles
@@ -208,7 +206,7 @@ module.exports = async function (api, opts) {
      * Used to get a restaurant at an exact location
      * - Useful for bookmarks / other requests requiring a lat/lng ==> name translation
      */
-    api.get('/restaurant/:lat/:lng', async function(req, res) {
+    api.get('/restaurant/get/:lat/:lng', async function(req, res) {
         var lat = req.params['lat'];
         var lng = req.params['lng'];
 
@@ -221,6 +219,18 @@ module.exports = async function (api, opts) {
         //         //...
         //     }
         // }
+    });
+
+    /**
+     * Used to add a restaurant at lat/lng
+     */
+    api.post('/restaurant/add/:lat/:lng', async function (req, res) {
+        var lat = req.params['lat'];
+        var lng = req.params['lng'];
+
+        // TODO
+        // use req.body for other data
+        // req.body => { name: ..., hours: ..., address: ..., owner: ... }
     });
 
     /**
