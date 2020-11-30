@@ -181,10 +181,9 @@ module.exports = async function (api, opts) {
             else {
                 bounds.push(lon2);
             }
-            ;
 
         };
-
+        var response = { results: [] };
         api.db.db("restaurants")
             .table("locations")
             .between(bounds[0], bounds[1], {rightBound: 'closed'})
@@ -192,16 +191,17 @@ module.exports = async function (api, opts) {
                 if (err) {
                     return err;
                 }
-                if(!rests) {
+                if (!rests) {
                     return null;
                 }
+
+                for (let x in rests) {
+                    if (bounds[2] >= x[lon] && bounds[3] <= x[lon]) {
+                        response.results.push(x)
+                    }
+                }
         })
-        var response = {results: []}
-        for (let x in rests) {
-            if (bounds[2] >= x[lon] && bounds[3] <= x[lon] ) {
-                response.results.push(x)
-            }
-        }
+        
         return response;
 		
         // TODO
