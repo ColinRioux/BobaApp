@@ -103,6 +103,28 @@ module.exports = async function (api, opts) {
      */
     api.get('/search/:query', async function(req, res) {
         var query = req.params['query'];
+        var str = '^';
+        var quer = str.concat(query);
+
+        api.db.db("restaurants")
+            .table("locations")
+            .filter(function(rest){
+                return rest('name').match(quer);
+            })
+            .run().then(function (err, rests) {
+            if (err) {
+                return err;
+            }
+            if(!rests) {
+                return null;
+            }
+        })
+
+        var response = {results: []};
+        for (let x in rests) {
+            response.results.push(x);
+        }
+        return response;
 
         // TODO
         // 1. Make a call to the database fetching all entries in the 
@@ -126,39 +148,61 @@ module.exports = async function (api, opts) {
         var lat = req.params['lat'];
         var lng = req.params['lng'];
 
-		// initiliazing some variables to help with calculations
-		radius=6371e3;
+		// initialize some helper vars
+        let radius = 6371e3;
 		var bounds = [];
-		distance = 20 / 0.6214 * 1000;
-		var bearings = [0,180,90,270];
+        let distance = 20 / 0.6214 * 1000;
+        const bearings = [0, 180, 90, 270];
 
-		// convert lat / long to Radians
-		lat1 = lat * Math.PI / 180;
-		lon1 = long * Math.PI / 180;
-		delta = distance / radius;
+        // convert lat / long to Radians
+        let lat1 = lat * Math.PI / 180;
+        let lon1 = long * Math.PI / 180;
+        let delta = distance / radius;
 
-		// loop through north, south, east, west
-		for (x of bearings) {
-			// convert bearing to Radians
-			theta = x * Math.PI / 180;
 
-			lat2 = Math.asin(Math.sin(lat1) * Math.cos(delta) + Math.cos(lat1) * Math.sin(delta) * Math.cos(theta) );
+        let theta; let lat2; let y; let x; let lon2;
+        // loop through north, south, east, west
+        for (x of bearings) {
+            // convert bearing to Radians
+            theta = x * Math.PI / 180;
 
-			y = Math.sin(theta) * Math.sin(delta) * Math.cos(lat1);
-			x = Math.cos(delta) - Math.sin(lat1) * Math.sin(lat2);
+            lat2 = Math.asin(Math.sin(lat1) * Math.cos(delta) + Math.cos(lat1) * Math.sin(delta) * Math.cos(theta));
 
-			lon2 = lon1 + Math.atan2(y,x);
-			
-			// store only lats of north and south bound
-			if( x == 0 || x == 90 ) {
-				bounds.push(lat2);
-			}
-			// store only lons of west and east bounds
-			else {
-				bounds.push(lon2);
-			};
+            y = Math.sin(theta) * Math.sin(delta) * Math.cos(lat1);
+            x = Math.cos(delta) - Math.sin(lat1) * Math.sin(lat2);
 
-		};
+            lon2 = lon1 + Math.atan2(y, x);
+
+            // store only latitudes of north and south bound
+            if (x == 0 || x == 90) {
+                bounds.push(lat2);
+            }
+            // store only longitudes of west and east bounds
+            else {
+                bounds.push(lon2);
+            }
+            ;
+
+        };
+
+        api.db.db("restaurants")
+            .table("locations")
+            .between(bounds[0], bounds[1], {rightBound: 'closed'})
+            .run().then(function (err, rests) {
+                if (err) {
+                    return err;
+                }
+                if(!rests) {
+                    return null;
+                }
+        })
+        var response = {results: []}
+        for (let x in rests) {
+            if (bounds[2] >= x[lon] && bounds[3] <= x[lon] ) {
+                response.results.push(x)
+            }
+        }
+        return response;
 		
         // TODO
         // 1. Determine range of lat/lng coordinates that are in a radius of MAX 25 miles
