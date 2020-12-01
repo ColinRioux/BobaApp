@@ -256,24 +256,13 @@ module.exports = async function (api, opts) {
 
         return api.db.db("restaurants")
             .table("locations")
-            .filter(api.db.row('lat').eq(lat))
-            .run().then(function (rests) {
-                var response = {
-                    result: {}
-                };
-
-                if (!rests) {
-                    return response;
+            .filter({lat: lat, lng: lng})
+            .run().then(function (result) {
+                if (result.errors > 0) {
+                    return { success: false, message: "db error" };
                 }
 
-                for (let x in rests) {
-                    var rest = rests[x];
-                    if (Number(rest.lng) == lng) {
-                        response.result = rest;
-                        break;
-                    }
-                }
-                return response;
+                return { success: true, message: "", result: result[0] };
             });
     });
 
@@ -290,7 +279,8 @@ module.exports = async function (api, opts) {
             lng: lng,
             address: req.body.address,
             hours: req.body.hours,
-            owner: req.body.owner
+            owner: req.body.owner,
+            feedback: []
         };
 
         return api.db.db("restaurants")
@@ -311,9 +301,25 @@ module.exports = async function (api, opts) {
         var lat = req.params['lat'];
         var lng = req.params['lng'];
 
-        // TODO
-        // 1. Read req.body for the form data
-        // 2. Save the feedback intuitively into the restaurant (of lat/lng) db
+        var feedback = {
+            title: req.body.title,
+            summary: req.body.summary
+        };
+
+        // Todo handle achievements for user
+
+        return api.db.db("restaurants")
+            .table("locations")
+            .filter({lat: lat, lng: lng})
+            .update({
+                feedback: api.db.row('feedback').append(feedback)
+            })
+            .run().then(function (err, result) {
+                if (err.errors > 0) {
+                    return { success: false, message: "db update error" };
+                }
+                return { success: true, message: "" };
+            });
     });
 
     /**
@@ -326,6 +332,15 @@ module.exports = async function (api, opts) {
         // TODO
         // 1. Verify if the user via user session cookie is restaurant owner
         // 2. Verify if the user is this restaurant's owner (comparing lat/lng)
-        // 3. Return a response json similar to /search which lists out the feedback (parsable by frontend)
+
+        return api.db.db("restaurants")
+            .table("locations")
+            .filter({ lat: lat, lng: lng })
+            .run().then(function (result) {
+                if (result.errors > 0) {
+                    return { success: false, message: "db error" };
+                }
+                return { success: true, message: "", result: result[0].feedback };
+            });
     });
 };
