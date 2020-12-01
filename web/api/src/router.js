@@ -254,27 +254,47 @@ module.exports = async function (api, opts) {
         var lat = req.params['lat'];
         var lng = req.params['lng'];
 
-        // TODO
-        // 1. Make a call to the database fetching the entry which matches that lat/lng
-        // 2. Return a response of the json format:
-        // var response = { 
-        //     result: {
-        //         name: "Restaurant A",
-        //         //...
-        //     }
-        // }
+        var response = { 
+            result: {}
+        };
+        api.db.db("restaurants")
+            .table("locations")
+            .getAll(lat, { index: 'lat' })
+            .run().then(function (err, rests) {
+                if (err) {
+                    return response;
+                }
+                if (!rests) {
+                    return response;
+                }
+
+                for (let x in rests) {
+                    if (x.lng == lng) {
+                        response.result = x;
+                        break;
+                    }
+                }
+                // return response; 
+            });
+        return response;
     });
 
     /**
-     * Used to add a restaurant at lat/lng
+     * Used to add a restaurant at lat/lng into the locations table
      */
     api.post('/restaurant/add/:lat/:lng', async function (req, res) {
         var lat = req.params['lat'];
         var lng = req.params['lng'];
 
-        // TODO
-        // use req.body for other data
-        // req.body => { name: ..., hours: ..., address: ..., owner: ... }
+        return api.db.db("restaurants")
+            .table("locations")
+            .insert(document)
+            .run().then(function(err, result) {
+                if (err.errors > 0) {
+                    return { success: false, message: "db insert error" };
+                }
+                return { success: true, message: "" };
+            });
     });
 
     /**
