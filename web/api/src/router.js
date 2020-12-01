@@ -108,9 +108,7 @@ module.exports = async function (api, opts) {
 
         api.db.db("restaurants")
             .table("locations")
-            .filter(function(rest){
-                return rest('name').match(quer);
-            })
+            .filter(api.db.row('name').match(quer))
             .run().then(function (err, rests) {
             if (err) {
                 return err;
@@ -186,7 +184,7 @@ module.exports = async function (api, opts) {
         var response = { results: [] };
         api.db.db("restaurants")
             .table("locations")
-            .between(bounds[0], bounds[1], {rightBound: 'closed'})
+            .between(bounds[0], bounds[1], {index: 'lat'})
             .run().then(function (err, rests) {
                 if (err) {
                     return err;
@@ -196,7 +194,7 @@ module.exports = async function (api, opts) {
                 }
 
                 for (let x in rests) {
-                    if (bounds[2] >= x[lon] && bounds[3] <= x[lon]) {
+                    if (bounds[2] >= x[lng] && bounds[3] <= x[lng]) {
                         response.results.push(x)
                     }
                 }
