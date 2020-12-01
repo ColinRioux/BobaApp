@@ -280,11 +280,20 @@ module.exports = async function (api, opts) {
     });
 
     /**
-     * Used to add a restaurant at lat/lng into the locations table
+     * Used to add a restaurant at lat/lng into the database
      */
     api.post('/restaurant/add/:lat/:lng', async function (req, res) {
         var lat = req.params['lat'];
         var lng = req.params['lng'];
+
+        var document = {
+            name: req.body.name,
+            lat: lat,
+            lng: lng,
+            address: req.body.address,
+            hours: req.body.hours,
+            owner: req.body.owner
+        };
 
         return api.db.db("restaurants")
             .table("locations")
