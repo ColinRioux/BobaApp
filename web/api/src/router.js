@@ -286,8 +286,8 @@ module.exports = async function (api, opts) {
         return api.db.db("restaurants")
             .table("locations")
             .insert(document)
-            .run().then(function(err, result) {
-                if (err.errors > 0) {
+            .run().then(function(result) {
+                if (result.errors > 0) {
                     return { success: false, message: "db insert error" };
                 }
                 return { success: true, message: "" };
@@ -314,8 +314,8 @@ module.exports = async function (api, opts) {
             .update({
                 feedback: api.db.row('feedback').append(feedback)
             })
-            .run().then(function (err, result) {
-                if (err.errors > 0) {
+            .run().then(function (result) {
+                if (result.errors > 0) {
                     return { success: false, message: "db update error" };
                 }
                 return { success: true, message: "" };
