@@ -254,29 +254,27 @@ module.exports = async function (api, opts) {
         var lat = req.params['lat'];
         var lng = req.params['lng'];
 
-        var response = { 
-            result: {}
-        };
-        api.db.db("restaurants")
+        return api.db.db("restaurants")
             .table("locations")
-            .getAll(lat, { index: 'lat' })
-            .run().then(function (err, rests) {
-                if (err) {
-                    return response;
-                }
+            .filter(api.db.row('lat').eq(lat))
+            .run().then(function (rests) {
+                var response = {
+                    result: {}
+                };
+
                 if (!rests) {
                     return response;
                 }
 
                 for (let x in rests) {
-                    if (x.lng == lng) {
-                        response.result = x;
+                    var rest = rests[x];
+                    if (Number(rest.lng) == lng) {
+                        response.result = rest;
                         break;
                     }
                 }
-                // return response; 
+                return response;
             });
-        return response;
     });
 
     /**
