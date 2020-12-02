@@ -106,37 +106,20 @@ module.exports = async function (api, opts) {
         var str = '^';
         var quer = str.concat(query);
 
-        api.db.db("restaurants")
+        return api.db.db("restaurants")
             .table("locations")
             .filter(api.db.row('name').match(quer))
-            .run().then(function (err, rests) {
-            if (err) {
-                return err;
-            }
-            if(!rests) {
-                return null;
-            }
-        })
+            .run().then(function (result) {
+                if (result.errors > 0) {
+                    return { success: false, message: "db error" };
+                }
 
-        var response = {results: []};
-        for (let x in rests) {
-            response.results.push(x);
-        }
-        return response;
+                if (result.length <= 0) {
+                    return { success: false, message: "no restaurants found" };
+                }
 
-        // TODO
-        // 1. Make a call to the database fetching all entries in the 
-        //    restaurants table whose name exactly matches or starts with "query"
-        // 2. Return response of the json format:
-        // var response = { 
-        //     results: [{
-        //         name: "Restaurant A",
-        //         //...
-        //     }, {
-        //         name: "Restaurant B",
-        //         //...
-        //     }]
-        // }
+                return { success: true, message: "", result: result }
+        });
     });
 
     /**
