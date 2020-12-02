@@ -18,6 +18,9 @@ const path = require('path');
 // For usage, see src/authentication.js
 api.register(session, { key: fs.readFileSync(path.join(__dirname, 'secret_key')) });
 
+// Use CORS to allow axios requesting from same host
+api.register(require('fastify-cors'));
+
 // Router
 api.register(require('./src/router'), { prefix: '/' });
 

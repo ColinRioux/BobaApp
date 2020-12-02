@@ -55,6 +55,7 @@ import VueRouter from 'vue-router';
 import App from './App';
 import MapView from './MapView';
 import LoginView from './LoginView';
+import FeedbackView from './FeedbackView';
 
 Vue.use(VueRouter);
 
@@ -62,7 +63,8 @@ const router = new VueRouter({
     mode: 'history',
     routes: [
         { path: '/', component: MapView },
-        { path: '/login', component: LoginView }
+        { path: '/login', component: LoginView },
+        { path: '/feedback', component: FeedbackView }
     ]
 });
 
