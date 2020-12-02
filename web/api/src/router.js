@@ -248,6 +248,24 @@ module.exports = async function (api, opts) {
     });
 
     /**
+     * Used to list all restaurants
+     */
+    api.get('/restaurant/list', async function(req, res) {
+        return api.db.db("restaurants")
+            .table("locations")
+            .filter(function(doc) {
+                return doc.hasFields('name');
+            })
+            .run().then(function(result) {
+                if (result.errors > 0) {
+                    return { success: false, message: "db error" };
+                }
+
+                return { success: true, message: "", result: result };
+            });
+    });
+
+    /**
      * Used to add a restaurant at lat/lng into the database
      */
     api.post('/restaurant/add/:lat/:lng', async function (req, res) {
