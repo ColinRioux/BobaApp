@@ -11,7 +11,15 @@
     </div>
 </template>
 
-<script>
+<script src ="https://unpkg.com/axios/dist/axios.min.js">
+// Axios added via CDN
+// TODO
+// Add Axios to package manager
+
+import axios from 'axios';
+
+const BASE_URL = 'https://localhost:3000';
+
 export default {
     name: 'SearchBar',
     components: {},
@@ -23,6 +31,16 @@ export default {
             // TODO
             // 1. Send query to SBE API with search word
             // 2. Parse responses
+            axios
+                .get('$(BASE_URL)/search/' + this.searchQuery)
+                .then((response) => {this.restaurants = response.results})
+                .catch(function (error) {
+                    console.log(error);
+                })
+
+            if (this.restaurants.length == 0) {
+
+            }
             // 3. Append results in a "card" format to the .search div
             // 3.a. Could make a component for card or just manually do it, whichever is quicker
         }
