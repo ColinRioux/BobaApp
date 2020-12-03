@@ -38,9 +38,9 @@ export default {
                     var rests = document.getElementsByClassName('rests')[0];
                     rests.style.display = 'block';
                     for (x in this.results) {
-                        var li =document.createElement('li');
+                        var li = document.createElement('li');
                         li.setAttribute('class','item');
-                        li.setAttribute('v-on:click', 'restView(' +x+')');
+                        li.setAttribute('v-on:click', 'restView(' + x + ')');
                         console.log(x);
                         rests.appendChild(li);
                         var p = this.results[x];
@@ -48,8 +48,8 @@ export default {
                         li.innerHTML=li.innerHTML + p.name;
                     }
                     var search = document.getElementsByClassName('search')[0];
-                        search.appendChild(rests);
-                })
+                    search.appendChild(rests);
+                });
 
 
 
