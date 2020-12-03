@@ -1,17 +1,20 @@
 <template>
     <div id="app">
         <MenuBar/>
+        <Map/>
         <router-view/>
     </div>
 </template>
 
 <script>
 import MenuBar from './components/MenuBar'
+import Map from './components/Map'
 
 export default {
     name: 'App',
     components: {
-        MenuBar
+        MenuBar,
+        Map
     },
     created () {
         document.title = 'The Social Boba Experience'

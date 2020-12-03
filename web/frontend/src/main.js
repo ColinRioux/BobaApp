@@ -53,7 +53,7 @@ Vue.use(Buefy, {
 // Router
 import VueRouter from 'vue-router';
 import App from './App';
-import MapView from './MapView';
+import SearchView from './SearchView';
 import LoginView from './LoginView';
 import FeedbackView from './FeedbackView';
 import RestaurantAddView from './RestaurantAddView';
@@ -64,7 +64,7 @@ Vue.use(VueRouter);
 const router = new VueRouter({
     mode: 'history',
     routes: [
-        { path: '/', component: MapView },
+        { path: '/', component: SearchView },
         { path: '/login', component: LoginView },
         { path: '/feedback', component: FeedbackView },
         { path: '/add-restaurant', component: RestaurantAddView },

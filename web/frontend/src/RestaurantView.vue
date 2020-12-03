@@ -1,6 +1,5 @@
 <template>
     <div id="app">
-        <Map/>
         <RestaurantDisplay/>
     </div>
 </template>
@@ -16,7 +15,7 @@ export default {
         RestaurantDisplay
     },
     created () {
-        document.title = 'The Social Boba Experience - Restaurant'
+        document.title = 'The Social Boba Experience'
     }
 }
 </script>

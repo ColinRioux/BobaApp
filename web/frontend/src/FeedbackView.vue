@@ -1,22 +1,19 @@
 <template>
     <div id="app">
         <FeedbackForm />
-        <Map />
     </div>
 </template>
 
 <script>
 import FeedbackForm from './components/FeedbackForm'
-import Map from './components/Map'
 
 export default {
     name: 'MapView',
     components: {
-        FeedbackForm,
-        Map
+        FeedbackForm
     },
     created () {
-        document.title = 'The Social Boba Experience - Feedback'
+        document.title = 'The Social Boba Experience'
     }
 }
 </script>
