@@ -30,9 +30,9 @@ export default {
             // TODO
             // 1. Send query to SBE API with search word
             // 2. Parse responses
-            axios.get(`http://127.0.0.1:3000/search/` + this.searchQuery)
+            axios.get(`http://127.0.0.1:3000/search/${query}`)
                 .then((response) => {
-                    this.results = response.results
+                    this.results = response.data.result;
 
                     let x, t;
                     var rests = document.getElementsByClassName('rests')[0];
@@ -40,22 +40,28 @@ export default {
                     for (x in this.results) {
                         var li =document.createElement('li');
                         li.setAttribute('class','item');
+                        //li.setAttribute('@click', 'restView(' +x+')');
 
                         rests.appendChild(li);
+                        var p = this.results[x];
 
-                        li.innerHTML=li.innerHTML + x.name;
+                        li.innerHTML=li.innerHTML + p.name;
                     }
                     var search = document.getElementsByClassName('search')[0];
                         search.appendChild(rests);
                 })
-                .catch(function (error) {
-                    console.log(error);
-                });
+
+
 
                       
             // 3. Append results in a "card" format to the .search div
 
             // 3.a. Could make a component for card or just manually do it, whichever is quicker
+        },
+        restView(index) {
+            // TODO
+            // Add redirect route for restaurant view
+            this.$router.push()
         }
     },
     data() {
