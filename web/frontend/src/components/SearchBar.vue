@@ -9,7 +9,9 @@
             </b-button>
         </form>
         <ul class="rests">
-          <li class="item">test</li>
+            <li v-for="(rest, index) in results" :key="rest.id" class="item" @click="restView(index)">
+                {{ rest.name }}
+            </li>
         </ul>
     </div>
 </template>
@@ -27,41 +29,18 @@ export default {
             if (this.searchQuery.length == 0) return;
             // console.log(this.searchQuery); // use this log if you want to see if the search is working
             var query = this.searchQuery;
-            // TODO
-            // 1. Send query to SBE API with search word
-            // 2. Parse responses
+
             axios.get(`http://127.0.0.1:3000/search/${query}`)
                 .then((response) => {
                     this.results = response.data.result;
-
-                    let x, t;
-                    var rests = document.getElementsByClassName('rests')[0];
-                    rests.style.display = 'block';
-                    for (x in this.results) {
-                        var li = document.createElement('li');
-                        li.setAttribute('class','item');
-                        li.setAttribute('v-on:click', 'restView(' + x + ')');
-                        console.log(x);
-                        rests.appendChild(li);
-                        var p = this.results[x];
-
-                        li.innerHTML=li.innerHTML + p.name;
-                    }
-                    var search = document.getElementsByClassName('search')[0];
-                    search.appendChild(rests);
-                });
-
-
-
-                      
-            // 3. Append results in a "card" format to the .search div
-
-            // 3.a. Could make a component for card or just manually do it, whichever is quicker
+                    document.getElementsByClassName('rests')[0].style.display = 'block';
+                });      
         },
         restView(index) {
             // TODO
             // Add redirect route for restaurant view
-            this.$router.push()
+            console.log(index);
+            // this.$router.push({ path: `/restaurant?id=${this.results[index]}`});
         }
     },
     data() {
@@ -111,5 +90,9 @@ export default {
 
 .rests {
     display: none;
+}
+
+.item:hover {
+    cursor: pointer;
 }
 </style>

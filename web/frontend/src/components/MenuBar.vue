@@ -15,9 +15,8 @@
                 </router-link>
             </li> 
             <li class="menu-button">
-               <b-dropdown :triggers="['hover']" aria-role="menu" class="is-right">
+                <b-dropdown :triggers="['hover']" aria-role="menu" class="is-right">
                     <b-icon pack="fas" icon="user-circle" slot="trigger"></b-icon>
-
                     <b-dropdown-item aria-role="menuitem">
                         <router-link to="/login">Login</router-link>
                     </b-dropdown-item>
@@ -30,7 +29,7 @@
     </div>
 </template>
 
-<style scoped>
+<style>
 .menu {
     background-color: rgba(255, 255, 255, 0.6);
     height: 3em;
