@@ -70,7 +70,9 @@ export default {
         zoomSnap: 0.5,
         zoomControl: false
       },
-      showMap: true
+      showMap: true,
+      lat: 37.3382,
+      lng: -121.8863
     };
   },
   created() {
@@ -96,7 +98,9 @@ export default {
       }
 
       navigator.geolocation.getCurrentPosition((position) => {
-        this.center = latLng(position.coords.latitude, position.coords.longitude);
+        this.lat = position.coords.latitude;
+        this.lng = position.coords.longitude;
+        this.center = latLng(this.lat, this.lng);
       }, (error) => {
         console.log("W3C Geolocation API unable to get your nearby location");
       }, {
