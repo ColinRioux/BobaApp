@@ -9,7 +9,7 @@
             </b-button>
         </form>
         <ul class="rests">
-            <li v-for="(rest, index) in results" :key="rest.id" class="item" @click="restView(index)">
+            <li v-for="(rest, index) in results" :key="rest.id" class="item" @click="viewRestaurant(index)">
                 {{ rest.name }}
             </li>
         </ul>
@@ -36,11 +36,8 @@ export default {
                     document.getElementsByClassName('rests')[0].style.display = 'block';
                 });      
         },
-        restView(index) {
-            // TODO
-            // Add redirect route for restaurant view
-            console.log(index);
-            // this.$router.push({ path: `/restaurant?id=${this.results[index]}`});
+        viewRestaurant(index) {
+            this.$router.push({ path: `/restaurant?lat=${this.results[index].lat}&lng=${this.results[index].lng}`});
         }
     },
     data() {

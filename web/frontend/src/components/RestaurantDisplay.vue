@@ -47,7 +47,7 @@ export default {
                 }); 
         },
         gotoFeedback() {
-            this.$router.push({ path: `/feedback?lat=${this.restaurant.lat}&lng=${this.restaurant.lng}`})
+            this.$router.push({ path: `/feedback?lat=${this.restaurant.lat}&lng=${this.restaurant.lng}`});
         },
         gotoBookmark() {
             // TODO
@@ -61,7 +61,7 @@ export default {
             restaurant: {}
         }
     },
-    created() {
+    mounted() {
         if (this.$route.query.lat && this.$route.query.lng) {
             this.getRestaurant(this.$route.query.lat, this.$route.query.lng);
         }
