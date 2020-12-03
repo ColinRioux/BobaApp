@@ -75,6 +75,10 @@ export default {
 </script>
 
 <style scoped>
+/*  TODO  */
+/*  Fix results list to be displayed vertically
+    Add a little styling to the results list
+*/
 .search {
     z-index: 1000;
     position: absolute;
