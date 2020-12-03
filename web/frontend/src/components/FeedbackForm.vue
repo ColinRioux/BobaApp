@@ -1,5 +1,5 @@
 <template>
-    <div class="feedback" @click="exitView">
+    <div class="feedback">
         <form ref="form" class="feedback-form" @submit.prevent="submitFeedback">
             <b-field class="feedback-title-field" label="Title">
                 <b-input 
