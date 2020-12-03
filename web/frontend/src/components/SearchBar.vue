@@ -11,14 +11,9 @@
     </div>
 </template>
 
-<script src ="https://unpkg.com/axios/dist/axios.min.js">
-// Axios added via CDN
-// TODO
-// Add Axios to package manager
+<script>
 
 import axios from 'axios';
-
-const BASE_URL = 'https://localhost:3000';
 
 export default {
     name: 'SearchBar',
@@ -32,7 +27,7 @@ export default {
             // 1. Send query to SBE API with search word
             // 2. Parse responses
             axios
-                .get('$(BASE_URL)/search/' + this.searchQuery)
+                .get(`http://127.0.0.1:3000/search/` + this.searchQuery)
                 .then((response) => {this.restaurants = response.results})
                 .catch(function (error) {
                     console.log(error);
