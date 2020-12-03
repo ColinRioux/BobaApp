@@ -20,9 +20,12 @@
             <b-button type="is-light" class="card-button" @click="gotoFeedback">
                 <b-icon pack="fas" icon="comments"></b-icon>
             </b-button>
-            <!-- TODO: If logged in, see bookmark button -->
+            <!-- TODO: If logged in, see bookmark/edit button -->
             <b-button type="is-light" class="card-button" @click="gotoBookmark">
                 <b-icon pack="fas" icon="bookmark"></b-icon>
+            </b-button>
+            <b-button type="is-light" class="card-button" @click="gotoSuggest">
+                <b-icon pack="fas" icon="pen-square"></b-icon>
             </b-button>
         </div>
     </div>
@@ -52,8 +55,23 @@ export default {
         gotoBookmark() {
             // TODO
         },
+        gotoSuggest() {
+
+        },
         goBack() {
             this.$router.go(-1);
+        }
+    },
+    watch: {
+        '$route.query.lat'() {
+            if (this.$route.query.lat && this.$route.query.lng) {
+                this.getRestaurant(this.$route.query.lat, this.$route.query.lng);
+            }
+        },
+        '$route.query.lng'() {
+            if (this.$route.query.lat && this.$route.query.lng) {
+                this.getRestaurant(this.$route.query.lat, this.$route.query.lng);
+            }
         }
     },
     data() {
