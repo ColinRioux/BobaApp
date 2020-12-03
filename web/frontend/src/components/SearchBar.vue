@@ -8,13 +8,13 @@
                 <b-icon pack="fas" icon="search"></b-icon>
             </b-button>
         </form>
+        <ul class="rests">
+          <li class="item">test</li>
+        </ul>
     </div>
 </template>
 
-<script src ="https://unpkg.com/axios/dist/axios.min.js">
-// Axios added via CDN
-// TODO
-// Add Axios to package manager
+<script src>
 
 import axios from 'axios';
 
@@ -28,26 +28,45 @@ export default {
             // Block queries of length 0
             if (this.searchQuery.length == 0) return;
             // console.log(this.searchQuery); // use this log if you want to see if the search is working
+            var query = this.searchQuery;
             // TODO
             // 1. Send query to SBE API with search word
             // 2. Parse responses
             axios
-                .get('$(BASE_URL)/search/' + this.searchQuery)
-                .then((response) => {this.restaurants = response.results})
-                .catch(function (error) {
-                    console.log(error);
-                })
+                .get(`http://127.0.0.1:3000/search/${query}`)
+                .then((response) => {
+                  if (!response.data.success) {
+                      console.log("no rests returned")
+                      this.submissionResponse = "No restaurants that match your search query! Try searching for something else."
+                  } else {
+                      this.results = response.data.result
 
-            if (this.restaurants.length == 0) {
+                      let x, t;
+                      var rests = document.getElementsByClassName('rests')[0];
+                      rests.style.display = 'block';
+                      for (x in this.results) {
+                        var li =document.createElement('li');
+                        li.setAttribute('class','item');
 
-            }
+                        rests.appendChild(li);
+
+                        li.innerHTML=li.innerHTML + x.name;
+                      }
+                      var search = document.getElementsByClassName('search')[0];
+                      search.appendChild(rests);
+                  }
+
+                });
             // 3. Append results in a "card" format to the .search div
+
             // 3.a. Could make a component for card or just manually do it, whichever is quicker
         }
     },
     data() {
         return {
-            searchQuery: ""
+            searchQuery: "",
+            submissionResponse: "",
+            results: []
         }
     }
 }
@@ -82,5 +101,9 @@ export default {
 
 .button:hover {
     background: none;
+}
+
+.rests {
+    display: none;
 }
 </style>
