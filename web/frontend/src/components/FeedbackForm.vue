@@ -41,8 +41,8 @@ export default {
             // Example query url /feedback?lat=35&lng=30
             // This will be used when we ditch the menu bar feedback button in favor of a feedback link
             // on the boba restaurant card
-            var lat = (this.$route.query.lat) ? this.$route.query.lat : 35;
-            var lng = (this.$route.query.lng) ? this.$route.query.lng : 30;
+            var lat = (this.$route.query.lat) ? this.$route.query.lat : 37.349667;
+            var lng = (this.$route.query.lng) ? this.$route.query.lng : -121.9477423;
 
             // Must use arrow function in the "then" to inherit "this"
             axios.post(`http://127.0.0.1:3000/feedback/add/${lat}/${lng}`, body)
