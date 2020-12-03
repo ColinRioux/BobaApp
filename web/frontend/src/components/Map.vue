@@ -73,6 +73,9 @@ export default {
       showMap: true
     };
   },
+  created() {
+    this.getLocation();
+  },
   methods: {
     zoomUpdate(zoom) {
       this.currentZoom = zoom;
@@ -85,6 +88,20 @@ export default {
     },
     innerClick() {
       alert("Click!");
+    },
+    getLocation() {
+      if (!navigator.geolocation) {
+        console.log("W3C Geolocation not supported by your browser!");
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.center = latLng(position.coords.latitude, position.coords.longitude);
+      }, (error) => {
+        console.log("W3C Geolocation API unable to get your nearby location");
+      }, {
+        maximumAge: 30000
+      })
     }
   }
 };
