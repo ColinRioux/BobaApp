@@ -40,8 +40,8 @@ export default {
                     for (x in this.results) {
                         var li =document.createElement('li');
                         li.setAttribute('class','item');
-                        //li.setAttribute('@click', 'restView(' +x+')');
-
+                        li.setAttribute('v-on:click', 'restView(' +x+')');
+                        console.log(x);
                         rests.appendChild(li);
                         var p = this.results[x];
 
