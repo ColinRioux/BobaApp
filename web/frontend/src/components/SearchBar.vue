@@ -14,11 +14,13 @@
     </div>
 </template>
 
+<<<<<<< HEAD
 <script src>
+=======
+<script>
+>>>>>>> 821803e800c1a4e057ba4f955e41645501fb0019
 
 import axios from 'axios';
-
-const BASE_URL = 'https://localhost:3000';
 
 export default {
     name: 'SearchBar',
@@ -33,6 +35,7 @@ export default {
             // 1. Send query to SBE API with search word
             // 2. Parse responses
             axios
+<<<<<<< HEAD
                 .get(`http://127.0.0.1:3000/search/${query}`)
                 .then((response) => {
                   if (!response.data.success) {
@@ -40,6 +43,13 @@ export default {
                       this.submissionResponse = "No restaurants that match your search query! Try searching for something else."
                   } else {
                       this.results = response.data.result
+=======
+                .get(`http://127.0.0.1:3000/search/` + this.searchQuery)
+                .then((response) => {this.restaurants = response.results})
+                .catch(function (error) {
+                    console.log(error);
+                })
+>>>>>>> 821803e800c1a4e057ba4f955e41645501fb0019
 
                       let x, t;
                       var rests = document.getElementsByClassName('rests')[0];

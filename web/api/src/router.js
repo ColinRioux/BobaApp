@@ -126,64 +126,28 @@ module.exports = async function (api, opts) {
      * Used to search for boba restaurants relative to the requester's location
      */
     api.get('/search/:lat/:lng', async function(req, res) {
-        var lat = req.params['lat'];
-        var lng = req.params['lng'];
+        var lat = Number(req.params['lat']);
+        var lng = Number(req.params['lng']);
 
-		// initialize some helper vars
-        let radius = 6371e3;
-		var bounds = [];
-        let distance = 20 / 0.6214 * 1000;
-        const bearings = [0, 180, 90, 270];
-
-        // convert lat / long to Radians
-        let lat1 = lat * Math.PI / 180;
-        let lon1 = long * Math.PI / 180;
-        let delta = distance / radius;
-
-
-        let theta; let lat2; let y; let x; let lon2;
-        // loop through north, south, east, west
-        for (x of bearings) {
-            // convert bearing to Radians
-            theta = x * Math.PI / 180;
-
-            lat2 = Math.asin(Math.sin(lat1) * Math.cos(delta) + Math.cos(lat1) * Math.sin(delta) * Math.cos(theta));
-
-            y = Math.sin(theta) * Math.sin(delta) * Math.cos(lat1);
-            x = Math.cos(delta) - Math.sin(lat1) * Math.sin(lat2);
-
-            lon2 = lon1 + Math.atan2(y, x);
-
-            // store only latitudes of north and south bound
-            if (x == 0 || x == 90) {
-                bounds.push(lat2);
-            }
-            // store only longitudes of west and east bounds
-            else {
-                bounds.push(lon2);
-            }
-
-        };
-        var response = { results: [] };
-        api.db.db("restaurants")
+        var lat_bounds = [-10, 10];
+        var lng_bounds = [-10, 10];
+		
+        return api.db.db("restaurants")
             .table("locations")
-            .between(bounds[0], bounds[1], {index: 'lat'})
-            .run().then(function (err, rests) {
-                if (err) {
-                    return err;
+            .between(lat + lat_bounds[0], lat + lat_bounds[1], {index: 'lat'})
+            .run().then(function (result) {
+                if (result.errors > 0) {
+                    return { success: false, message: "db error" };
                 }
-                if (!rests) {
-                    return null;
-                }
-
-                for (let x in rests) {
-                    if (bounds[2] >= x[lng] && bounds[3] <= x[lng]) {
-                        response.results.push(x)
+                var results = [];
+                for (let x in result) {
+                    var loc = result[x];
+                    if (lng_bounds[0] + lng <= loc.lng && lng_bounds[1] + lng >= loc.lng) {
+                        results.push(x);
                     }
                 }
-        })
-        
-        return response;
+                return { success: true, message: "", result: results };
+        });
 		
         // TODO
         // 1. Determine range of lat/lng coordinates that are in a radius of MAX 25 miles
@@ -248,6 +212,24 @@ module.exports = async function (api, opts) {
     });
 
     /**
+     * Used to list all restaurants
+     */
+    api.get('/restaurant/list', async function(req, res) {
+        return api.db.db("restaurants")
+            .table("locations")
+            .filter(function(doc) {
+                return doc.hasFields('name');
+            })
+            .run().then(function(result) {
+                if (result.errors > 0) {
+                    return { success: false, message: "db error" };
+                }
+
+                return { success: true, message: "", result: result };
+            });
+    });
+
+    /**
      * Used to add a restaurant at lat/lng into the database
      */
     api.post('/restaurant/add/:lat/:lng', async function (req, res) {
@@ -256,8 +238,8 @@ module.exports = async function (api, opts) {
 
         var document = {
             name: req.body.name,
-            lat: lat,
-            lng: lng,
+            lat: Number(lat),
+            lng: Number(lng),
             address: req.body.address,
             hours: req.body.hours,
             owner: req.body.owner,

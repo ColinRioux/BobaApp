@@ -70,8 +70,13 @@ export default {
         zoomSnap: 0.5,
         zoomControl: false
       },
-      showMap: true
+      showMap: true,
+      lat: 37.3382,
+      lng: -121.8863
     };
+  },
+  created() {
+    this.getLocation();
   },
   methods: {
     zoomUpdate(zoom) {
@@ -85,6 +90,22 @@ export default {
     },
     innerClick() {
       alert("Click!");
+    },
+    getLocation() {
+      if (!navigator.geolocation) {
+        console.log("W3C Geolocation not supported by your browser!");
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.lat = position.coords.latitude;
+        this.lng = position.coords.longitude;
+        this.center = latLng(this.lat, this.lng);
+      }, (error) => {
+        console.log("W3C Geolocation API unable to get your nearby location");
+      }, {
+        maximumAge: 30000
+      })
     }
   }
 };
