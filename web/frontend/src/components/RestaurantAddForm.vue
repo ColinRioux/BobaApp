@@ -13,16 +13,12 @@
                 <b-input 
                     class="add-restaurant-input" 
                     v-model="lat" 
-                    minlength="1"
-                    maxlength="3"
                     placeholder="Latitude"></b-input>
             </b-field>
             <b-field class="add-restaurant-field" label="Longitude">
                 <b-input 
                     class="add-restaurant-input" 
                     v-model="lng" 
-                    minlength="1"
-                    maxlength="3"
                     placeholder="Restaurant Name"></b-input>
             </b-field>
             <b-field class="add-restaurant-field" label="Address">
@@ -71,21 +67,14 @@ export default {
                 hours: this.hours,
                 owner: this.owner
             };
-            
-
-            // Example query url /feedback?lat=35&lng=30
-            // This will be used when we ditch the menu bar feedback button in favor of a feedback link
-            // on the boba restaurant card
-            // var lat = (this.$route.query.lat) ? this.$route.query.lat : 35;
-            // var lng = (this.$route.query.lng) ? this.$route.query.lng : 30;
 
             // Must use arrow function in the "then" to inherit "this"
             axios.post(`http://127.0.0.1:3000/restaurant/add/${this.lat}/${this.lng}`, body)
                 .then(response => {
                     if (!response.data.success) {
-                        this.submissionResponse = "Your feedback failed to submit! Please try again later!";
+                        this.submissionResponse = "Your request failed to submit! Please try again later!";
                     } else {
-                        alert("Successfully Submitted your feedback!");
+                        alert("Successfully Submitted your restaurant!");
                         this.exitView();
                     }
                 });
