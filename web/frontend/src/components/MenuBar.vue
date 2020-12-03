@@ -10,11 +10,6 @@
                 </router-link>
             </li> 
             <li class="menu-button">
-                <router-link to="/feedback">
-                    <b-icon pack="fas" icon="comments"></b-icon>
-                </router-link>
-            </li> 
-            <li class="menu-button">
                 <b-dropdown :triggers="['hover']" aria-role="menu" class="is-right">
                     <b-icon pack="fas" icon="user-circle" slot="trigger"></b-icon>
                     <b-dropdown-item aria-role="menuitem">
