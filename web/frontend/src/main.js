@@ -57,6 +57,7 @@ import MapView from './MapView';
 import LoginView from './LoginView';
 import FeedbackView from './FeedbackView';
 import RestaurantAddView from './RestaurantAddView';
+import RestaurantView from './RestaurantView';
 
 Vue.use(VueRouter);
 
@@ -66,7 +67,8 @@ const router = new VueRouter({
         { path: '/', component: MapView },
         { path: '/login', component: LoginView },
         { path: '/feedback', component: FeedbackView },
-        { path: '/add-restaurant', component: RestaurantAddView }
+        { path: '/add-restaurant', component: RestaurantAddView },
+        { path: '/restaurant', component: RestaurantView }
     ]
 });
 
