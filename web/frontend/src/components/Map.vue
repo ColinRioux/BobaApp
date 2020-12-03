@@ -57,7 +57,12 @@ export default {
     };
   },
   created() {
-    this.getLocation();
+    // If we pass a specific lat/lng, we only want to show the location we've selected
+    if (this.$route.query.lat && this.$route.query.lng) {
+      this.getExactRestaurant(this.$route.query.lat, this.$route.query.lng)
+    } else {
+      this.getLocation();
+    }
   },
   methods: {
     zoomUpdate(zoom) {
@@ -96,14 +101,23 @@ export default {
           }
 
           this.nearbyLocations = response.data.result;
-          console.log(this.nearbyLocations);
+        }); 
+    },
+    getExactRestaurant(lat, lng) {
+      axios.get(`http://127.0.0.1:3000/restaurant/get/${lat}/${lng}`)
+        .then((response) => {
+          if (!response.data.success) {
+            return;
+          }
+          this.nearbyLocations = [response.data.result];
+          this.center = latLng(lat, lng);
         }); 
     },
     latLngToObject(lat, lng) {
       return latLng(lat, lng);
     },
     restView(index) {
-      this.$router.push({ path: `/restaurant?id=${this.nearbyLocations[index].id}` });
+      this.$router.push({ path: `/restaurant?lat=${this.nearbyLocations[index].lat}&lng=${this.nearbyLocations[index].lng}` });
     }
   }
 };

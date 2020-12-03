@@ -1,18 +1,19 @@
 <template>
     <div id="app">
         <Map/>
-        <!-- <SearchBar/> -->
+        <RestaurantDisplay/>
     </div>
 </template>
 
 <script>
 import Map from './components/Map'
-// import SearchBar from './components/SearchBar'
+import RestaurantDisplay from './components/RestaurantDisplay'
 
 export default {
     name: 'RestaurantView',
     components: {
         Map,
+        RestaurantDisplay
     },
     created () {
         document.title = 'The Social Boba Experience - Restaurant'

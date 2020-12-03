@@ -206,7 +206,9 @@ module.exports = async function (api, opts) {
                 if (result.errors > 0) {
                     return { success: false, message: "db error" };
                 }
-
+                if (result.length <= 0) {
+                    return { success: false, message: "no results found" };
+                }
                 return { success: true, message: "", result: result[0] };
             });
     });
