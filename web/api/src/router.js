@@ -143,7 +143,7 @@ module.exports = async function (api, opts) {
                 for (let x in result) {
                     var loc = result[x];
                     if (lng_bounds[0] + lng <= loc.lng && lng_bounds[1] + lng >= loc.lng) {
-                        results.push(x);
+                        results.push(loc);
                     }
                 }
                 return { success: true, message: "", result: results };
@@ -201,7 +201,7 @@ module.exports = async function (api, opts) {
 
         return api.db.db("restaurants")
             .table("locations")
-            .filter({lat: lat, lng: lng})
+            .filter({lat: Number(lat), lng: Number(lng)})
             .run().then(function (result) {
                 if (result.errors > 0) {
                     return { success: false, message: "db error" };
@@ -273,7 +273,7 @@ module.exports = async function (api, opts) {
 
         return api.db.db("restaurants")
             .table("locations")
-            .filter({lat: lat, lng: lng})
+            .filter({lat: Number(lat), lng: Number(lng)})
             .update({
                 feedback: api.db.row('feedback').append(feedback)
             })
@@ -298,7 +298,7 @@ module.exports = async function (api, opts) {
 
         return api.db.db("restaurants")
             .table("locations")
-            .filter({ lat: lat, lng: lng })
+            .filter({ lat: Number(lat), lng: Number(lng) })
             .run().then(function (result) {
                 if (result.errors > 0) {
                     return { success: false, message: "db error" };

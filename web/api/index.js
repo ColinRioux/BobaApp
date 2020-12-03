@@ -38,6 +38,8 @@ db.dbList().run().then(function (result) {
         console.log('Created restaurants database');
         db.dbCreate('restaurants').run();
         db.db('restaurants').tableCreate('locations').run();
+    } else {
+        // db.db('restaurants').table('locations').indexCreate('lat').run();
     }
 });
 
