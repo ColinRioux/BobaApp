@@ -6,7 +6,7 @@
         <ul>
             <li class="menu-button">
                 <router-link to="/">
-                    <b-icon pack="fas" icon="home"></b-icon>
+                    <b-icon pack="fas" icon="home" type="is-small"></b-icon>
                 </router-link>
             </li> 
             <li class="menu-button">
@@ -15,15 +15,17 @@
                 </router-link>
             </li> 
             <li class="menu-button">
-               <b-dropdown :triggers="['hover']" aria-role="menu" class="is-right">
+                
+                <b-dropdown :triggers="['hover']" aria-role="menu" class="is-right">
                     <b-icon pack="fas" icon="user-circle" slot="trigger"></b-icon>
-
-                    <b-dropdown-item aria-role="menuitem">
-                        <router-link to="/login">Login</router-link>
-                    </b-dropdown-item>
-                    <b-dropdown-item aria-role="menuitem">
-                        <router-link to="/register">Register</router-link>
-                    </b-dropdown-item>
+                    <div class="dropdown-box">
+                        <b-dropdown-item aria-role="menuitem">
+                            <router-link to="/login">Login</router-link>
+                        </b-dropdown-item>
+                        <b-dropdown-item aria-role="menuitem">
+                            <router-link to="/register">Register</router-link>
+                        </b-dropdown-item>
+                    </div>
                 </b-dropdown>
             </li> 
         </ul>
@@ -65,5 +67,12 @@
 
 .logo:hover, .menu-button:hover {
     color: gray;
+}
+
+.dropdown-box {
+    border-radius: 5px;
+    background-color: white;
+    right: 0px;
+    position: absolute;
 }
 </style>
