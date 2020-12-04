@@ -9,6 +9,9 @@
             </div>
             <div class="card">
                 <!-- TODO: Stickers -->
+                <div class="stickers">
+                    <b-icon pack="fas" icon="smile" class="is-small"></b-icon>
+                </div>
                 <h5 class="title is-5">Address</h5>
                 <p class="subtitle is-6">{{ restaurant.address }}</p>
                 <h5 class="title is-5">Hours</h5>
@@ -249,5 +252,10 @@ h1 {
 
 .is-6 {
     padding-bottom: 10px;
+}
+
+.stickers { 
+    margin-left: 10px;
+    margin-top: 10px;
 }
 </style>

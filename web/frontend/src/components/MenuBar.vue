@@ -1,6 +1,6 @@
 <template>
     <div class="menu">
-        <a class="logo">
+        <a class="logo" @click="goHome">
             <span>The Social Boba Experience</span>
         </a>
         <ul>
@@ -23,6 +23,18 @@
         </ul>
     </div>
 </template>
+
+<script>
+    export default {
+        name: 'MenuBar',
+        components: {},
+        methods: {
+            goHome() {
+                this.$router.push({ path: '/' });
+            }
+        }
+    };
+</script>
 
 <style>
 .menu {
