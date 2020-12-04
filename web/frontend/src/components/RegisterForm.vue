@@ -27,7 +27,7 @@
 
                     <button @click.prevent="submit">Sign Up</button>
 
-                    <p>Have an Account? <a href="/login">Login</a></p>
+                    <p>Have an Account? <a @click="exitView">Login</a></p>
                 </div>
             </form>   
         </div>
@@ -75,7 +75,7 @@ export default {
 
 <style scoped>
     .register-form {
-        background-color:#ecd5bf;
+        background-color: rgba(236, 213, 191, 0.8);
         width: 30%;
         height: 100%;
         position: absolute;

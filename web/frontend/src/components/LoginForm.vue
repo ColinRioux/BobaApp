@@ -31,7 +31,7 @@
 
 <style scoped>
 .login-form {
-  background-color: #ecd5bf;
+  background-color: rgba(236, 213, 191, 0.8);
   width: 30%;
   height: 100%;
   position: absolute;
