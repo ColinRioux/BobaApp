@@ -8,10 +8,18 @@
                 <b-icon pack="fas" icon="search"></b-icon>
             </b-button>
         </form>
+        <ul class="rests">
+            <li v-for="(rest, index) in results" :key="rest.id" class="item" @click="viewRestaurant(index)">
+                {{ rest.name }}
+            </li>
+        </ul>
     </div>
 </template>
 
 <script>
+
+import axios from 'axios';
+
 export default {
     name: 'SearchBar',
     components: {},
@@ -20,22 +28,33 @@ export default {
             // Block queries of length 0
             if (this.searchQuery.length == 0) return;
             // console.log(this.searchQuery); // use this log if you want to see if the search is working
-            // TODO
-            // 1. Send query to SBE API with search word
-            // 2. Parse responses
-            // 3. Append results in a "card" format to the .search div
-            // 3.a. Could make a component for card or just manually do it, whichever is quicker
+            var query = this.searchQuery;
+
+            axios.get(`http://127.0.0.1:3000/search/${query}`)
+                .then((response) => {
+                    this.results = response.data.result;
+                    document.getElementsByClassName('rests')[0].style.display = 'block';
+                });      
+        },
+        viewRestaurant(index) {
+            this.$router.push({ path: `/restaurant?lat=${this.results[index].lat}&lng=${this.results[index].lng}`});
         }
     },
     data() {
         return {
-            searchQuery: ""
+            searchQuery: "",
+            submissionResponse: "",
+            results: []
         }
     }
 }
 </script>
 
 <style scoped>
+/*  TODO  */
+/*  Fix results list to be displayed vertically
+    Add a little styling to the results list
+*/
 .search {
     z-index: 1000;
     position: absolute;
@@ -64,5 +83,13 @@ export default {
 
 .button:hover {
     background: none;
+}
+
+.rests {
+    display: none;
+}
+
+.item:hover {
+    cursor: pointer;
 }
 </style>

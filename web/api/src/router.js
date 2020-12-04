@@ -128,104 +128,48 @@ module.exports = async function (api, opts) {
         var str = '^';
         var quer = str.concat(query);
 
-        api.db.db("restaurants")
+        return api.db.db("restaurants")
             .table("locations")
-            .filter(function (rest) {
-                return rest('name').match(quer);
-            })
-            .run().then(function (err, rests) {
-                if (err) {
-                    return err;
+            .filter(api.db.row('name').match(quer))
+            .run().then(function (result) {
+                if (result.errors > 0) {
+                    return { success: false, message: "db error" };
                 }
-                if (!rests) {
-                    return null;
+
+                if (result.length <= 0) {
+                    return { success: false, message: "no restaurants found" };
                 }
-            })
 
-        var response = { results: [] };
-        for (let x in rests) {
-            response.results.push(x);
-        }
-        return response;
-
-        // TODO
-        // 1. Make a call to the database fetching all entries in the 
-        //    restaurants table whose name exactly matches or starts with "query"
-        // 2. Return response of the json format:
-        // var response = { 
-        //     results: [{
-        //         name: "Restaurant A",
-        //         //...
-        //     }, {
-        //         name: "Restaurant B",
-        //         //...
-        //     }]
-        // }
+                return { success: true, message: "", result: result }
+        });
     });
 
     /**
      * Used to search for boba restaurants relative to the requester's location
      */
-    api.get('/search/:lat/:lng', async function (req, res) {
-        var lat = req.params['lat'];
-        var lng = req.params['lng'];
+    api.get('/search/:lat/:lng', async function(req, res) {
+        var lat = Number(req.params['lat']);
+        var lng = Number(req.params['lng']);
 
-        // initialize some helper vars
-        let radius = 6371e3;
-        var bounds = [];
-        let distance = 20 / 0.6214 * 1000;
-        const bearings = [0, 180, 90, 270];
-
-        // convert lat / long to Radians
-        let lat1 = lat * Math.PI / 180;
-        let lon1 = long * Math.PI / 180;
-        let delta = distance / radius;
-
-
-        let theta; let lat2; let y; let x; let lon2;
-        // loop through north, south, east, west
-        for (x of bearings) {
-            // convert bearing to Radians
-            theta = x * Math.PI / 180;
-
-            lat2 = Math.asin(Math.sin(lat1) * Math.cos(delta) + Math.cos(lat1) * Math.sin(delta) * Math.cos(theta));
-
-            y = Math.sin(theta) * Math.sin(delta) * Math.cos(lat1);
-            x = Math.cos(delta) - Math.sin(lat1) * Math.sin(lat2);
-
-            lon2 = lon1 + Math.atan2(y, x);
-
-            // store only latitudes of north and south bound
-            if (x == 0 || x == 90) {
-                bounds.push(lat2);
-            }
-            // store only longitudes of west and east bounds
-            else {
-                bounds.push(lon2);
-            }
-            ;
-
-        };
-
-        api.db.db("restaurants")
+        var lat_bounds = [-10, 10];
+        var lng_bounds = [-10, 10];
+		
+        return api.db.db("restaurants")
             .table("locations")
-            .between(bounds[0], bounds[1], { rightBound: 'closed' })
-            .run().then(function (err, rests) {
-                if (err) {
-                    return err;
+            .between(lat + lat_bounds[0], lat + lat_bounds[1], {index: 'lat'})
+            .run().then(function (result) {
+                if (result.errors > 0) {
+                    return { success: false, message: "db error" };
                 }
-                if (!rests) {
-                    return null;
+                var results = [];
+                for (let x in result) {
+                    var loc = result[x];
+                    if (lng_bounds[0] + lng <= loc.lng && lng_bounds[1] + lng >= loc.lng) {
+                        results.push(loc);
+                    }
                 }
-            })
-        var response = { results: [] }
-        for (let x in rests) {
-            if (bounds[2] >= x[lon] && bounds[3] <= x[lon]) {
-                response.results.push(x)
-            }
-        }
-        return response;
-
+                return { success: true, message: "", result: results };
+        });
         // TODO
         // 1. Determine range of lat/lng coordinates that are in a radius of MAX 25 miles
         // 2. Make a call to the database fetching all entries within the range
@@ -272,19 +216,68 @@ module.exports = async function (api, opts) {
      * Used to get a restaurant at an exact location
      * - Useful for bookmarks / other requests requiring a lat/lng ==> name translation
      */
-    api.get('/restaurant/:lat/:lng', async function (req, res) {
+    api.get('/restaurant/get/:lat/:lng', async function(req, res) {
         var lat = req.params['lat'];
         var lng = req.params['lng'];
 
-        // TODO
-        // 1. Make a call to the database fetching the entry which matches that lat/lng
-        // 2. Return a response of the json format:
-        // var response = { 
-        //     result: {
-        //         name: "Restaurant A",
-        //         //...
-        //     }
-        // }
+        return api.db.db("restaurants")
+            .table("locations")
+            .filter({lat: Number(lat), lng: Number(lng)})
+            .run().then(function (result) {
+                if (result.errors > 0) {
+                    return { success: false, message: "db error" };
+                }
+                if (result.length <= 0) {
+                    return { success: false, message: "no results found" };
+                }
+                return { success: true, message: "", result: result[0] };
+            });
+    });
+
+    /**
+     * Used to list all restaurants
+     */
+    api.get('/restaurant/list', async function(req, res) {
+        return api.db.db("restaurants")
+            .table("locations")
+            .filter(function(doc) {
+                return doc.hasFields('name');
+            })
+            .run().then(function(result) {
+                if (result.errors > 0) {
+                    return { success: false, message: "db error" };
+                }
+
+                return { success: true, message: "", result: result };
+            });
+    });
+
+    /**
+     * Used to add a restaurant at lat/lng into the database
+     */
+    api.post('/restaurant/add/:lat/:lng', async function (req, res) {
+        var lat = req.params['lat'];
+        var lng = req.params['lng'];
+
+        var document = {
+            name: req.body.name,
+            lat: Number(lat),
+            lng: Number(lng),
+            address: req.body.address,
+            hours: req.body.hours,
+            owner: req.body.owner,
+            feedback: []
+        };
+
+        return api.db.db("restaurants")
+            .table("locations")
+            .insert(document)
+            .run().then(function(result) {
+                if (result.errors > 0) {
+                    return { success: false, message: "db insert error" };
+                }
+                return { success: true, message: "" };
+            });
     });
 
     /**
@@ -294,9 +287,25 @@ module.exports = async function (api, opts) {
         var lat = req.params['lat'];
         var lng = req.params['lng'];
 
-        // TODO
-        // 1. Read req.body for the form data
-        // 2. Save the feedback intuitively into the restaurant (of lat/lng) db
+        var feedback = {
+            title: req.body.title,
+            summary: req.body.summary
+        };
+
+        // Todo handle achievements for user
+
+        return api.db.db("restaurants")
+            .table("locations")
+            .filter({lat: Number(lat), lng: Number(lng)})
+            .update({
+                feedback: api.db.row('feedback').append(feedback)
+            })
+            .run().then(function (result) {
+                if (result.errors > 0) {
+                    return { success: false, message: "db update error" };
+                }
+                return { success: true, message: "" };
+            });
     });
 
     /**
@@ -309,6 +318,15 @@ module.exports = async function (api, opts) {
         // TODO
         // 1. Verify if the user via user session cookie is restaurant owner
         // 2. Verify if the user is this restaurant's owner (comparing lat/lng)
-        // 3. Return a response json similar to /search which lists out the feedback (parsable by frontend)
+
+        return api.db.db("restaurants")
+            .table("locations")
+            .filter({ lat: Number(lat), lng: Number(lng) })
+            .run().then(function (result) {
+                if (result.errors > 0) {
+                    return { success: false, message: "db error" };
+                }
+                return { success: true, message: "", result: result[0].feedback };
+            });
     });
 };

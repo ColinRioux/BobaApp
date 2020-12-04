@@ -1,6 +1,6 @@
 <template>
     <div class="menu">
-        <a class="logo">
+        <a class="logo" @click="goHome">
             <span>The Social Boba Experience</span>
         </a>
         <ul>
@@ -10,29 +10,33 @@
                 </router-link>
             </li> 
             <li class="menu-button">
-                <router-link to="/feedback">
-                    <b-icon pack="fas" icon="comments"></b-icon>
-                </router-link>
-            </li> 
-            <li class="menu-button">
-                
                 <b-dropdown :triggers="['hover']" aria-role="menu" class="is-right">
                     <b-icon pack="fas" icon="user-circle" slot="trigger"></b-icon>
-                    <div class="dropdown-box">
-                        <b-dropdown-item aria-role="menuitem">
-                            <router-link to="/login">Login</router-link>
-                        </b-dropdown-item>
-                        <b-dropdown-item aria-role="menuitem">
-                            <router-link to="/register">Register</router-link>
-                        </b-dropdown-item>
-                    </div>
+                    <b-dropdown-item aria-role="menuitem">
+                        <router-link to="/login">Login</router-link>
+                    </b-dropdown-item>
+                    <b-dropdown-item aria-role="menuitem">
+                        <router-link to="/register">Register</router-link>
+                    </b-dropdown-item>
                 </b-dropdown>
             </li> 
         </ul>
     </div>
 </template>
 
-<style scoped>
+<script>
+    export default {
+        name: 'MenuBar',
+        components: {},
+        methods: {
+            goHome() {
+                this.$router.push({ path: '/' });
+            }
+        }
+    };
+</script>
+
+<style>
 .menu {
     background-color: rgba(255, 255, 255, 0.6);
     height: 3em;

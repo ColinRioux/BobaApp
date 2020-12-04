@@ -9,6 +9,7 @@
   "dependencies": {
     "bcrypt": "5.0.0",
     "fastify": "3.8.0",
+    "fastify-cors": "5.0.0",
     "fastify-passport": "0.1.0",
     "fastify-secure-session": "2.3.0",
     "passport-local": "1.0.0",
