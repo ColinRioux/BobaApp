@@ -8,14 +8,11 @@
 
 <script>
 import RegisterForm from './components/RegisterForm'
-import Map from "./components/Map";
-import SearchBar from "./components/SearchBar";
 
 export default {
     name: 'RegisterView',
     components: {
-        RegisterForm,
-        Map
+        RegisterForm
     },
     created () {
         document.title = 'The Social Boba Experience - Register'
