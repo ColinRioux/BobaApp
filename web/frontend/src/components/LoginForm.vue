@@ -1,9 +1,9 @@
 <template>
   <div>
-    <!-- <div class="left-side">
-      <p>Sign Up</p>
-    </div> -->
     <div class="login-form">
+      <b-button type="is-light" class="close-button" @click="closeSidebar" title="Close">
+          <b-icon pack="fas" icon="times"></b-icon>
+      </b-button>
       <form action="action_page.php" method="post">
         <div class="container">
           <label for="uname"><b>Username</b></label>
@@ -22,12 +22,24 @@
             required
           />
 
-          <button type="submit">Login</button>
+          <button class="submit-button" type="submit">Login</button>
         </div>
       </form>
     </div>
   </div>
 </template>
+
+<script>
+  export default {
+      name: 'LoginForm',
+      components: {},
+      methods: {
+        closeSidebar() {
+          this.$router.push({ path: '/' });
+        }
+      }
+  }
+</script>
 
 <style scoped>
 .login-form {
@@ -35,18 +47,10 @@
   width: 30%;
   height: 100%;
   position: absolute;
-  right: 0px;
-  top: 0px;
+  right: 0;
+  top: 3em;
   z-index: 999;
 }
-
-/* .left-side {
-    background-color: #ceb195;
-    width: 60%;
-    height: 100%;
-    position: absolute;
-    background-repeat: no-repeat;
-  } */
 
 label {
   color: black;
@@ -62,7 +66,7 @@ input {
   box-sizing: border-box;
 }
 
-button {
+.submit-button {
   border-radius: 20px;
   width: 20%;
   background-color: #4caf50;
@@ -73,11 +77,22 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+.submit-button:hover {
   opacity: 0.8;
 }
 
 .container {
   padding: 70px;
+}
+
+.close-button {
+  float: left;
+  margin-left: 10px;
+  margin-top: 10px;
+  z-index: 1000;
+}
+
+.close-button:hover {
+  cursor: pointer;
 }
 </style>

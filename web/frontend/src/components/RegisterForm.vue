@@ -1,9 +1,9 @@
 <template>
     <div>
-        <!-- <div class="left-side">
-            <p>Sign Up</p>
-        </div> -->
         <div class="register-form">
+            <b-button type="is-light" class="close-button" @click="closeSidebar" title="Close">
+                <b-icon pack="fas" icon="times"></b-icon>
+            </b-button>
             <form id="RegisterForm" @submit.prevent="submit">
                 <div class="container">
                     <label for="email"><b>Email</b></label>
@@ -25,7 +25,7 @@
                         <option value="admin">Admin</option>
                     </select>
 
-                    <button @click.prevent="submit">Sign Up</button>
+                    <button class="submit-button" @click.prevent="submit">Sign Up</button>
 
                     <p>Have an Account? <a @click="exitView">Login</a></p>
                 </div>
@@ -68,6 +68,9 @@ export default {
         },
         exitView() {
             this.$router.push({ path: '/login' });
+        },
+        closeSidebar() {
+          this.$router.push({ path: '/' });
         }
     }
 }
@@ -79,18 +82,10 @@ export default {
         width: 30%;
         height: 100%;
         position: absolute;
-        right: 0px;
-        top: 0px;
+        right: 0;
+        top: 3em;
         z-index: 999;
     }
-
-    /* .left-side {
-        background-color: #ceb195;
-        width: 60%;
-        height: 100%;
-        position: absolute;
-        background-repeat: no-repeat;
-    } */
 
     label, p {
         color: black;
@@ -106,7 +101,7 @@ export default {
         box-sizing: border-box;
     }
 
-    button {
+    .submit-button {
         border-radius: 20px;
         width: 20%;
         background-color: #4CAF50;
@@ -117,11 +112,22 @@ export default {
         cursor: pointer;
     }
 
-    button:hover {
+    .submit-button:hover {
         opacity: 0.8;
     }
 
     .container {
         padding: 70px;
+    }
+
+    .close-button {
+        float: left;
+        margin-left: 10px;
+        margin-top: 10px;
+        z-index: 1000;
+    }
+
+    .close-button:hover {
+        cursor: pointer;
     }
 </style>
