@@ -8,7 +8,7 @@
                 <router-link to="/">
                     <b-icon pack="fas" icon="home" type="is-small"></b-icon>
                 </router-link>
-            </li> 
+            </li>
             <li class="menu-button">
                 <b-dropdown :triggers="['hover']" aria-role="menu" class="is-right">
                     <b-icon pack="fas" icon="user-circle" slot="trigger"></b-icon>
@@ -21,7 +21,7 @@
                         </b-dropdown-item>
                     </div>
                 </b-dropdown>
-            </li> 
+            </li>
         </ul>
     </div>
 </template>
