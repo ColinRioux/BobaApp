@@ -12,12 +12,14 @@
             <li class="menu-button">
                 <b-dropdown :triggers="['hover']" aria-role="menu" class="is-right">
                     <b-icon pack="fas" icon="user-circle" slot="trigger"></b-icon>
-                    <b-dropdown-item aria-role="menuitem">
-                        <router-link to="/login">Login</router-link>
-                    </b-dropdown-item>
-                    <b-dropdown-item aria-role="menuitem">
-                        <router-link to="/register">Register</router-link>
-                    </b-dropdown-item>
+                    <div class="dropdown-box">
+                        <b-dropdown-item aria-role="menuitem">
+                            <router-link to="/login">Login</router-link>
+                        </b-dropdown-item>
+                        <b-dropdown-item aria-role="menuitem">
+                            <router-link to="/register">Register</router-link>
+                        </b-dropdown-item>
+                    </div>
                 </b-dropdown>
             </li> 
         </ul>
