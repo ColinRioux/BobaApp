@@ -11,7 +11,7 @@
         :url="url"
         :attribution="attribution" />
       <l-marker v-for="(loc, index) in nearbyLocations" :key="loc.id" :lat-lng="latLngToObject(loc.lat, loc.lng)" @click="restView(index)" class="boba-marker">
-        <l-tooltip :options="{ interactive: true }">
+        <l-tooltip :options="{ permanent: true, interactive: true }">
           <div>
             {{ loc.name }}
           </div>

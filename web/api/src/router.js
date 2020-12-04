@@ -91,13 +91,13 @@ module.exports = async function (api, opts) {
     api.post('/register', async function (req, res) {
         try {
             var userType = req.body.userType;
-            const hashedPassword = await bcrypt.hash(req.body.password, 10)
+            const hashedPassword = await bcrypt.hash(req.body.password, 10);
             var user = {
                 email: req.body.email,
                 username: req.body.username,
                 password: hashedPassword,
             };
-            console.log(user)
+            console.log(user);
             return api.db.db("users")
                 .table(userType)
                 .insert(user)
@@ -105,11 +105,11 @@ module.exports = async function (api, opts) {
                     if (result.errors > 0) {
                         return { success: false, message: "db insert error" };
                     }
+                    res.redirect('/login');
                     return { success: true, message: "" };
                 });
-            res.redirect('/login')
         } catch {
-            res.redirect('/register')
+            res.redirect('/register');
         }
     });
 
