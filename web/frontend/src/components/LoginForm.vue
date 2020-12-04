@@ -4,30 +4,74 @@
       <p>Sign Up</p>
     </div> -->
     <div class="login-form">
-      <form action="action_page.php" method="post">
+      <form id="LoginForm" @submit.prevent="submit">
         <div class="container">
-          <label for="uname"><b>Username</b></label>
+          <label for="username"><b>Username</b></label>
           <input
             type="text"
             placeholder="Enter Username"
-            name="uname"
-            required
+            name="username"
+            required v-model="username"
           />
 
-          <label for="psw"><b>Password</b></label>
+          <label for="password"><b>Password</b></label>
           <input
             type="password"
             placeholder="Enter Password"
-            name="psw"
-            required
+            name="password"
+            required v-model="password"
           />
 
-          <button type="submit">Login</button>
+          <label for="userType"><b>User Type</b></label>
+            <select id="userType" name="userType" v-model="userType" >
+                <option value="customer" selected>Customer</option>
+                <option value="owner">Store Owner</option>
+                <option value="admin">Admin</option>
+            </select>
+
+          <button @click.prevent="submit">Login</button>
         </div>
       </form>
     </div>
   </div>
 </template>
+
+<script>
+import axios from 'axios';
+
+export default {
+    name: 'LoginForm',
+    data() {
+        return {
+            username: "",
+            password: "",
+            userType: ""
+        };
+    },
+    methods: {
+        submit() {
+            var body = {
+                username: this.username,
+                password: this.password,
+                userType: this.userType
+            };
+
+            axios.post('http://127.0.0.1:3000/login', body)
+                .then(response => {
+                    if(!response.data.success){
+                        this.submissionResponse = "Your request failed! Please try again later!";
+                    } else {
+                        alert("Successfully Logged-in!");
+                        this.exitView();
+                    }
+                });
+        },
+        exitView() {
+            this.$router.push({ path: '/' });
+        }
+    }
+}
+</script>
 
 <style scoped>
 .login-form {
@@ -52,7 +96,7 @@ label {
   color: black;
 }
 
-input {
+input, select {
   border-radius: 25px;
   width: 100%;
   padding: 12px 20px;

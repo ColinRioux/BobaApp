@@ -33,13 +33,14 @@ module.exports = async function (api, opts) {
         passwordField: 'password',
         passReqToCallback: true
     },
-        function (req, email, password, done) {
+        function (req, username, password, done) {
             // req.body.email
             // req.body.password
             // req.body.accountType ==> customer, owner, admin
+            console.log(username)
             api.db.db('users')
-                .table(req.body.accountType)
-                .filter(api.db.row('email').eq(email))
+                .table(req.body.userType)
+                .filter(api.db.row('username').eq(username))
                 .run().then(function (err, user) {
                     if (err) {
                         return done(err);
@@ -80,14 +81,37 @@ module.exports = async function (api, opts) {
     /**
      * Used to log a user into the platform
      */
-    api.post('/login', async function (req, res) {
-
+    api.post('/login', {
+        prevalidation: passport.authenticate('local', { successRedirect: '/', failureRedirect: '/login', failureFlash: true })
+        // },
+        //     async (request) => `Hello ${request.user.name}!`
+    }, async function (req, res) {
+        return { success: true, message: "" };
     });
+
+
+    // api.post('/login', async function (req, res) {
+    //     var userType = req.body.userType;
+    //     var loginUser = {
+    //         username: req.body.username,
+    //         password: req.body.password,
+    //         userType: userType
+    //     };
+    //     console.log(loginUser)
+    //     return api.db.db("users")
+    //         .table(userType)
+    //         .filter(api.db.row('username').eq(username))
+    //         .run().then(function (result) {
+    //             if (result.errors > 0) {
+    //                 return { success: false, message: "db insert error" };
+    //             }
+    //             return { success: true, message: "" };
+    //         });
+    // });
 
     /**
      * Used to register a user
      */
-
     api.post('/register', async function (req, res) {
         try {
             var userType = req.body.userType;
@@ -96,8 +120,9 @@ module.exports = async function (api, opts) {
                 email: req.body.email,
                 username: req.body.username,
                 password: hashedPassword,
-                user_type: userType
+                userType: userType
             };
+            console.log(user)
             return api.db.db("users")
                 .table(userType)
                 .insert(user)

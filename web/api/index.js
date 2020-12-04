@@ -29,8 +29,9 @@ db.dbList().run().then(function (result) {
     if (!result.includes('users')) {
         console.log('Created users database');
         db.dbCreate('users').run();
-        db.dbList().run().then(function (result) {
-            if (result.includes('users')) {
+        db.dbList().run().then(function (result1) {
+            if (result1.includes('users')) {
+                console.log('Created User Tables')
                 db.db('users').tableCreate('customer').run();
                 db.db('users').tableCreate('owner').run();
                 db.db('users').tableCreate('admin').run();
@@ -40,8 +41,9 @@ db.dbList().run().then(function (result) {
     if (!result.includes('restaurants')) {
         console.log('Created restaurants database');
         db.dbCreate('restaurants').run();
-        db.dbList().run().then(function (result) {
-            if (result.includes('restaurants')) {
+        db.dbList().run().then(function (result1) {
+            if (result1.includes('restaurants')) {
+                console.log('Created Restaurant Tables')
                 db.db('restaurants').tableCreate('locations').run();
             }
         });
