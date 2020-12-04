@@ -55,6 +55,7 @@ import VueRouter from 'vue-router';
 import App from './App';
 import SearchView from './SearchView';
 import LoginView from './LoginView';
+import RegisterView from './RegisterView';
 import FeedbackView from './FeedbackView';
 import RestaurantAddView from './RestaurantAddView';
 import RestaurantView from './RestaurantView';
@@ -66,6 +67,7 @@ const router = new VueRouter({
     routes: [
         { path: '/', component: SearchView },
         { path: '/login', component: LoginView },
+        { path: '/register', component: RegisterView },
         { path: '/feedback', component: FeedbackView },
         { path: '/add-restaurant', component: RestaurantAddView },
         { path: '/restaurant', component: RestaurantView }
