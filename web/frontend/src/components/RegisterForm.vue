@@ -67,7 +67,7 @@ export default {
                 });
         },
         exitView() {
-            this.$router.go(loginView);
+            this.$router.push({ path: '/login' });
         }
     }
 }
