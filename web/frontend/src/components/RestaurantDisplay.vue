@@ -2,7 +2,7 @@
     <div class="restaurant-display">
         <div class="control-view">
             <div class="card-title">
-                <b-button type="is-light" class="card-title-button" @click="goBack">
+                <b-button type="is-light" class="card-title-button" @click="goBack" title="Back...">
                     <b-icon pack="fas" icon="backspace"></b-icon>
                 </b-button>
                 <h1 class="title">{{ restaurant.name }}</h1>
@@ -10,8 +10,13 @@
             <div class="card">
                 <!-- TODO: Stickers -->
                 <div class="stickers">
-                    <b-icon pack="fas" icon="smile" class="is-small"></b-icon>
+                    <b-icon pack="fas" icon="smile" class="is-small" title="Favorited"></b-icon>
+                    <span>&nbsp;&nbsp;</span>
+                    <b-icon pack="fas" icon="icicles" class="is-small" title="Iced Tea Options"></b-icon>
+                    <span>&nbsp;&nbsp;</span>
+                    <b-icon pack="fas" icon="seedling" class="is-small" title="Vegan Options"></b-icon>
                 </div>
+                <hr style="margin-bottom: 10px; margin-top: 10px;">
                 <h5 class="title is-5">Address</h5>
                 <p class="subtitle is-6">{{ restaurant.address }}</p>
                 <h5 class="title is-5">Hours</h5>
@@ -21,24 +26,24 @@
                 <h5 class="title is-5">Owner</h5>
                 <p class="subtitle is-6 no-bottom">{{ restaurant.owner }}</p>
                 <hr style="margin-bottom: 10px;">
-                <b-button type="is-light" class="card-button" @click="toggleFeedback">
+                <b-button type="is-light" class="card-button" @click="toggleFeedback" title="Feedback">
                     <b-icon pack="fas" icon="comments"></b-icon>
                 </b-button>
                 <!-- TODO: If logged in, see bookmark/edit button -->
-                <b-button type="is-light" class="card-button" @click="gotoBookmark">
+                <b-button type="is-light" class="card-button" @click="gotoBookmark" title="Bookmark">
                     <b-icon pack="fas" icon="bookmark"></b-icon>
                 </b-button>
-                <b-button type="is-light" class="card-button" @click="gotoSuggest">
+                <b-button type="is-light" class="card-button" @click="gotoSuggest" title="Suggest Edit">
                     <b-icon pack="fas" icon="pen-square"></b-icon>
                 </b-button>
-                <b-button type="is-light" class="card-button" @click="toggleMenu">
+                <b-button type="is-light" class="card-button" @click="toggleMenu" title="Menu">
                     <b-icon pack="fas" icon="book-open"></b-icon>
                 </b-button>
             </div>
         </div>
         <div class="menu-view">
             <div class="card-title">
-                <b-button type="is-light" class="card-title-button" @click="closeMenu">
+                <b-button type="is-light" class="card-title-button" @click="closeMenu" title="Close">
                     <b-icon pack="fas" icon="times"></b-icon>
                 </b-button>
                 <h1 class="title" v-if="menuView">Menu</h1>
@@ -257,5 +262,10 @@ h1 {
 .stickers { 
     margin-left: 10px;
     margin-top: 10px;
+    display: inline-block;
+}
+
+.stickers .is-small:hover {
+    cursor: help;
 }
 </style>

@@ -50,7 +50,7 @@ export default {
                     if (!response.data.success) {
                         this.submissionResponse = "Your feedback failed to submit! Please try again later!";
                     } else {
-                        alert("Successfully Submitted your feedback!");
+                        alert("Successfully submitted your feedback!");
                         this.exitView();
                     }
                 });
