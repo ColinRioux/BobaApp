@@ -33,7 +33,7 @@
                 <b-button type="is-light" class="card-button" @click="gotoBookmark" title="Bookmark">
                     <b-icon pack="fas" icon="bookmark"></b-icon>
                 </b-button>
-                <b-button type="is-light" class="card-button" @click="gotoSuggest" title="Suggest Edit">
+                <b-button type="is-light" class="card-button" @click="toggleSuggest" title="Suggest Edit">
                     <b-icon pack="fas" icon="pen-square"></b-icon>
                 </b-button>
                 <b-button type="is-light" class="card-button" @click="toggleMenu" title="Menu">
@@ -47,7 +47,8 @@
                     <b-icon pack="fas" icon="times"></b-icon>
                 </b-button>
                 <h1 class="title" v-if="menuView">Menu</h1>
-                <h1 class="title" v-else>Feedback</h1>
+                <h1 class="title" v-else-if="feedbackView">Feedback</h1>
+                <h1 class="title" v-else>Suggest Information</h1>
             </div>
             <div class="card">
                 <div class="menu-card" v-if="menuView">
@@ -59,7 +60,7 @@
                     <br/>
                     <br/>
                 </div>
-                <div class="feedback-card" v-else>
+                <div class="feedback-card" v-else-if="feedbackView">
                     <form ref="form" class="feedback-form" @submit.prevent="submitFeedback">
                         <br/>
                         <b-input 
@@ -77,6 +78,26 @@
                             type="textarea"></b-input>
                         <hr style="margin-bottom: 10px; margin-top: 10px; opacity: 0;">
                         <b-button type="is-light" class="card-button feedback-form-button" @click.prevent="submitFeedback" icon-left="arrow-circle-up">Submit</b-button>
+                    </form>
+                </div>
+                <div class="suggest-card" v-else>
+                    <form ref="form" class="suggest-form" @submit.prevent="submitSuggestion">
+                        <br/>
+                        <b-input 
+                            class="suggest-input" 
+                            v-model="suggestTitle" 
+                            minlength="5"
+                            maxlength="20"
+                            placeholder="Information Item"></b-input>
+                        <b-input 
+                            class="suggest-input" 
+                            v-model="suggestTitle" 
+                            placeholder="Summary/Change" 
+                            minlength="10"
+                            maxlength="200" 
+                            type="textarea"></b-input>
+                        <hr style="margin-bottom: 10px; margin-top: 10px; opacity: 0;">
+                        <b-button type="is-light" class="card-button suggest-form-button" @click.prevent="submitSuggestion" icon-left="arrow-circle-up">Submit</b-button>
                     </form>
                 </div>
             </div>
@@ -127,11 +148,24 @@ export default {
                     }
                 });
         },
-        gotoBookmark() {
-            // TODO
+        submitSuggestion() {
+            // Not implemente for this class
+            alert('Submitted!');
         },
-        gotoSuggest() {
-
+        gotoBookmark() {
+            // Not implemented for this class
+            alert('Bookmarked!');
+        },
+        toggleSuggest() {
+            var menu = document.getElementsByClassName('menu-view')[0];
+            if (this.suggestView) {
+                menu.style.display = 'none';
+            } else {
+                menu.style.display = 'block';
+            }
+            this.suggestView = !this.suggestView;
+            this.menuView = false;
+            this.feedbackView = false;
         },
         toggleFeedback() {
             var menu = document.getElementsByClassName('menu-view')[0];
@@ -142,6 +176,7 @@ export default {
             }
             this.feedbackView = !this.feedbackView;
             this.menuView = false;
+            this.suggestView = false;
         },
         toggleMenu() {
             var menu = document.getElementsByClassName('menu-view')[0];
@@ -152,6 +187,7 @@ export default {
             }
             this.menuView = !this.menuView;
             this.feedbackView = false;
+            this.suggestView = false;
         },
         closeMenu() {
             document.getElementsByClassName('menu-view')[0].style.display = 'none';
@@ -175,6 +211,7 @@ export default {
     data() {
         return {
             restaurant: {},
+            suggestView: false,
             feedbackView: false,
             menuView: true
         }
