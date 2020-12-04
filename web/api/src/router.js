@@ -96,6 +96,7 @@ module.exports = async function (api, opts) {
                 email: req.body.email,
                 username: req.body.username,
                 password: hashedPassword,
+                user_type: userType
             };
             console.log(user)
             return api.db.db("users")
@@ -141,22 +142,22 @@ module.exports = async function (api, opts) {
                 }
 
                 return { success: true, message: "", result: result }
-        });
+            });
     });
 
     /**
      * Used to search for boba restaurants relative to the requester's location
      */
-    api.get('/search/:lat/:lng', async function(req, res) {
+    api.get('/search/:lat/:lng', async function (req, res) {
         var lat = Number(req.params['lat']);
         var lng = Number(req.params['lng']);
 
         var lat_bounds = [-10, 10];
         var lng_bounds = [-10, 10];
-		
+
         return api.db.db("restaurants")
             .table("locations")
-            .between(lat + lat_bounds[0], lat + lat_bounds[1], {index: 'lat'})
+            .between(lat + lat_bounds[0], lat + lat_bounds[1], { index: 'lat' })
             .run().then(function (result) {
                 if (result.errors > 0) {
                     return { success: false, message: "db error" };
@@ -169,7 +170,7 @@ module.exports = async function (api, opts) {
                     }
                 }
                 return { success: true, message: "", result: results };
-        });
+            });
         // TODO
         // 1. Determine range of lat/lng coordinates that are in a radius of MAX 25 miles
         // 2. Make a call to the database fetching all entries within the range
@@ -216,13 +217,13 @@ module.exports = async function (api, opts) {
      * Used to get a restaurant at an exact location
      * - Useful for bookmarks / other requests requiring a lat/lng ==> name translation
      */
-    api.get('/restaurant/get/:lat/:lng', async function(req, res) {
+    api.get('/restaurant/get/:lat/:lng', async function (req, res) {
         var lat = req.params['lat'];
         var lng = req.params['lng'];
 
         return api.db.db("restaurants")
             .table("locations")
-            .filter({lat: Number(lat), lng: Number(lng)})
+            .filter({ lat: Number(lat), lng: Number(lng) })
             .run().then(function (result) {
                 if (result.errors > 0) {
                     return { success: false, message: "db error" };
@@ -237,13 +238,13 @@ module.exports = async function (api, opts) {
     /**
      * Used to list all restaurants
      */
-    api.get('/restaurant/list', async function(req, res) {
+    api.get('/restaurant/list', async function (req, res) {
         return api.db.db("restaurants")
             .table("locations")
-            .filter(function(doc) {
+            .filter(function (doc) {
                 return doc.hasFields('name');
             })
-            .run().then(function(result) {
+            .run().then(function (result) {
                 if (result.errors > 0) {
                     return { success: false, message: "db error" };
                 }
@@ -272,7 +273,7 @@ module.exports = async function (api, opts) {
         return api.db.db("restaurants")
             .table("locations")
             .insert(document)
-            .run().then(function(result) {
+            .run().then(function (result) {
                 if (result.errors > 0) {
                     return { success: false, message: "db insert error" };
                 }
@@ -296,7 +297,7 @@ module.exports = async function (api, opts) {
 
         return api.db.db("restaurants")
             .table("locations")
-            .filter({lat: Number(lat), lng: Number(lng)})
+            .filter({ lat: Number(lat), lng: Number(lng) })
             .update({
                 feedback: api.db.row('feedback').append(feedback)
             })

@@ -53,7 +53,6 @@ export default {
                 email: this.email,
                 username: this.username,
                 password: this.password,
-                password_repeat: this.password2
             };
 
             axios.post('http://127.0.0.1:3000/register', body)
