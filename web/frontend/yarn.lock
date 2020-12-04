@@ -1697,15 +1697,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^0.21.0":
-  version: 0.21.0
-  resolution: "axios@npm:0.21.0"
-  dependencies:
-    follow-redirects: ^1.10.0
-  checksum: 2/4b08ecab39040948c03cae5fa726fdcf8bc299679818179c146e779a922ce887fad9261d82ad57ad1a3aa1fcba3612f14b490fdfa2cd28fa23c190fd48517f5f
-  languageName: node
-  linkType: hard
-
 "ba-frontend@workspace:.":
   version: 0.0.0-use.local
   resolution: "ba-frontend@workspace:."
