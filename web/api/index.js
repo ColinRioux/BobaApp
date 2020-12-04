@@ -29,17 +29,22 @@ db.dbList().run().then(function (result) {
     if (!result.includes('users')) {
         console.log('Created users database');
         db.dbCreate('users').run();
-        db.db('users').tableCreate('customer').run();
-        db.db('users').tableCreate('owner').run();
-        db.db('users').tableCreate('admin').run();
+        db.dbList().run().then(function (result) {
+            if (result.includes('users')) {
+                db.db('users').tableCreate('customer').run();
+                db.db('users').tableCreate('owner').run();
+                db.db('users').tableCreate('admin').run();
+            }
+        });
     }
-
     if (!result.includes('restaurants')) {
         console.log('Created restaurants database');
         db.dbCreate('restaurants').run();
-        db.db('restaurants').tableCreate('locations').run();
-    } else {
-        // db.db('restaurants').table('locations').indexCreate('lat').run();
+        db.dbList().run().then(function (result) {
+            if (result.includes('restaurants')) {
+                db.db('restaurants').tableCreate('locations').run();
+            }
+        });
     }
 });
 

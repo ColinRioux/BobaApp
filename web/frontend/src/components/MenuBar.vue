@@ -6,7 +6,7 @@
         <ul>
             <li class="menu-button">
                 <router-link to="/">
-                    <b-icon pack="fas" icon="home"></b-icon>
+                    <b-icon pack="fas" icon="home" type="is-small"></b-icon>
                 </router-link>
             </li> 
             <li class="menu-button">
@@ -71,5 +71,12 @@
 
 .logo:hover, .menu-button:hover {
     color: gray;
+}
+
+.dropdown-box {
+    border-radius: 5px;
+    background-color: white;
+    right: 0px;
+    position: absolute;
 }
 </style>

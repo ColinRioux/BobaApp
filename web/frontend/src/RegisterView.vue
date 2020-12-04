@@ -1,25 +1,24 @@
 <template>
     <div id="app">
-        <LoginForm class="Right_Half"></LoginForm>
+        <RegisterForm class="Right_Half"></RegisterForm>
         <!-- <SearchBar class="Left_Half"></SearchBar> -->
         <Map class="Left_Half"></Map>
     </div>
 </template>
 
 <script>
-import LoginForm from "./components/LoginForm";
+import RegisterForm from './components/RegisterForm'
 import Map from "./components/Map";
 import SearchBar from "./components/SearchBar";
 
 export default {
-    name: "LoginView",
+    name: 'RegisterView',
     components: {
-        LoginForm,
-        Map,
-        // SearchBar,
+        RegisterForm,
+        Map
     },
-    created() {
-        document.title = "The Social Boba Experience - Login";
+    created () {
+        document.title = 'The Social Boba Experience - Register'
     }
 };
 </script>
