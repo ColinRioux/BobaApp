@@ -7,19 +7,19 @@
             <form id="RegisterForm" @submit.prevent="submit">
                 <div class="container">
                     <label for="email"><b>Email</b></label>
-                    <input type="text" id="email" placeholder="Enter Email" name="email" required>
+                    <input type="text" id="email" placeholder="Enter Email" name="email" required v-model="email" > 
 
                     <label for="username"><b>Username</b></label>
-                    <input type="text" id="username" placeholder="Enter Username" name="username" required>
+                    <input type="text" id="username" placeholder="Enter Username" name="username" required v-model="username" >
 
                     <label for="password"><b>Password</b></label>
-                    <input type="password" id="password" placeholder="Enter Password" name="password" required>
+                    <input type="password" id="password" placeholder="Enter Password" name="password" required v-model="password" >
 
                     <!-- <label for="password2"><b>Confirm Password</b></label>
                     <input type="password" id="password2" placeholder="Confirm Password" name="password2" required> -->
 
                     <label for="userType"><b>User Type</b></label>
-                    <select id="userType" name="userType">
+                    <select id="userType" name="userType" v-model="userType" >
                         <option value="customer" selected>Customer</option>
                         <option value="owner">Store Owner</option>
                         <option value="admin">Admin</option>
@@ -53,7 +53,7 @@ export default {
                 email: this.email,
                 username: this.username,
                 password: this.password,
-                password_repeat: this.password2
+                userType: this.userType
             };
 
             axios.post('http://127.0.0.1:3000/register', body)

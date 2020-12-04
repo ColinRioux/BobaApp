@@ -97,7 +97,6 @@ module.exports = async function (api, opts) {
                 username: req.body.username,
                 password: hashedPassword,
             };
-            console.log(user);
             return api.db.db("users")
                 .table(userType)
                 .insert(user)
@@ -105,11 +104,10 @@ module.exports = async function (api, opts) {
                     if (result.errors > 0) {
                         return { success: false, message: "db insert error" };
                     }
-                    res.redirect('/login');
                     return { success: true, message: "" };
                 });
         } catch {
-            res.redirect('/register');
+            return { success: false, message: "error" };
         }
     });
 
