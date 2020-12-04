@@ -1,33 +1,26 @@
 <template>
     <div id="app">
-        <RegisterForm class="Right_Half"></RegisterForm>
-        <!-- <SearchBar class="Left_Half"></SearchBar> -->
-        <Map class="Left_Half"></Map>
+        <SearchBar />
+        <RegisterForm />
     </div>
 </template>
 
 <script>
+import SearchBar from './components/SearchBar';
 import RegisterForm from './components/RegisterForm'
 
 export default {
     name: 'RegisterView',
     components: {
+        SearchBar,
         RegisterForm
     },
     created () {
-        document.title = 'The Social Boba Experience - Register'
+        document.title = 'The Social Boba Experience'
     }
 };
 </script>
 
 <style scoped>
-.Left_Half {
-  width: 70%;
-  height: 100%;
-}
 
-.Right_Half {
-  width: 30%;
-  height: 100%;
-}
 </style>
